@@ -3,6 +3,20 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const os = require('os')
+
+const getLocalIP = () => {
+  let IPv4, items
+  if (/windows/i.test(process.env.OS)) {
+    items = os.networkInterfaces() && os.networkInterfaces().WLAN
+  } else {
+    items = os.networkInterfaces() && os.networkInterfaces().en0
+  }
+  items && items.forEach(item => {
+    item.family === 'IPv4' && (IPv4 = item.address)
+  })
+  return IPv4
+}
 
 module.exports = {
   dev: {
@@ -10,11 +24,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api/*': {
+        target: `http://${getLocalIP()}:3000`, // 根据实际情况修改
+        changeOrigin: true,
+        secure: false
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8888, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -44,9 +64,6 @@ module.exports = {
   },
 
   build: {
-    // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
-
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',

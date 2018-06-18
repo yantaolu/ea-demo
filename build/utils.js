@@ -1,8 +1,26 @@
 'use strict'
+
+const os = require('os')
+// 获取本地IP地址
+exports.getLocalIP = () => {
+  let IPv4, items
+  if (/windows/i.test(process.env.OS)) {
+    items = os.networkInterfaces() && os.networkInterfaces().WLAN
+  } else {
+    items = os.networkInterfaces() && os.networkInterfaces().en0
+  }
+  items && items.forEach(item => {
+    item.family === 'IPv4' && (IPv4 = item.address)
+  })
+  return IPv4
+}
+
 const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
+const glob = require('glob')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -97,4 +115,42 @@ exports.createNotifierCallback = () => {
       subtitle: filename || ''
     })
   }
+}
+
+// 获取多页面入口js文件
+exports.getMultiEntry = () => {
+  let entries = {}, tmp, pathname
+  glob.sync('./src/multi-page/**/index.{js,jsx}').forEach(entry => {
+    tmp = entry.split('/').splice(-3)
+    pathname = tmp.splice(1, 1).toString().toLowerCase()
+    entries[pathname] = entry
+  })
+  return entries
+}
+
+// 获取多页面html模板
+exports.getMultiPages = () => {
+  let plugins = [], tmp, pathname
+  glob.sync('./src/multi-page/**/index.html').forEach(entry => {
+    tmp = entry.split('/').splice(-3)
+    pathname = tmp.splice(1, 1).toString().toLowerCase()
+
+    plugins.push(new HtmlWebpackPlugin({
+      filename: pathname + '.html',
+      template: entry,
+      inject: true,
+      chunks: ['manifest', 'vendor', pathname],
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      favicon: './src/assets/favicon.ico'
+    }))
+  })
+  return plugins
 }

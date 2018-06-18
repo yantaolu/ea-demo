@@ -1,0 +1,16 @@
+/* Header */
+$--header-padding: 0;
+/* Main */
+$--main-padding: 5px;
+
+$--border-radius-base: 2px !default;
+
+$--button-padding-vertical: 10px !default;
+$--button-medium-padding-vertical: 8px !default;
+$--button-small-padding-vertical: 7px !default;
+$--button-mini-padding-vertical: 6px !default;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "../../../node_modules/element-ui/packages/theme-chalk/src/index";

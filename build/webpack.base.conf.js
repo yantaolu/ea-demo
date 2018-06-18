@@ -21,9 +21,9 @@ const createLintingRule = () => ({
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
-    app: './src/main.js'
-  },
+  entry: Object.assign({
+    index: './src/index.js'
+  }, utils.getMultiEntry()),
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -37,6 +37,12 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }
+  },
+  externals: {
+    'BMap': 'BMap',
+    'bmap': 'BMap',
+    'BMapLib': 'BMapLib',
+    'bmapLib': 'BMapLib'
   },
   module: {
     rules: [
