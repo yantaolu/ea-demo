@@ -32,12 +32,10 @@ npm run build --report
   - webpack.base.conf.js webpack基础配置
   - webpack.dev.conf.js webpack开发环境配置
   - webpack.prod.conf.js webpack生产环境配置
-
 + config 开发/构建配置
   - index.js 开发/构建配置
-
 + dist 构建目录
-
+  ...
 + mock 数据模拟
   + data 数据目录，整合json静态数据以及js动态数据
     - array.json 静态json数组，会导出以文件名为key，数组为value的对象
@@ -46,7 +44,6 @@ npm run build --report
   - data.js 读取data目录下的数据并整合
   - router.json 路由转发规则配置
   - server.js json server 启动入口
-
 + src 源码目录
   + assets 静态资源目录
     - css 样式目录
@@ -59,7 +56,6 @@ npm run build --report
     - index.js 路由主入口
     - ***-route.js 路由模块文件
     - routes-processor.js 单页面路由解析方法
-
   + multi-page （多页面扩展目录，根据实际情况扩展）
     - page1 多页目录，最终打包以目录名生成对应的page1.html
     ...
