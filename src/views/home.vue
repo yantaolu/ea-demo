@@ -28,13 +28,13 @@
 
 export default {
   name: 'home',
-  data() {
+  data () {
     return {
       columns: [{
         type: 'index',
         label: 'No.',
         // hidden: true,
-        renderCell({row, column, $index}) {
+        renderCell ({row, column, $index}) {
           return `<span>${$index + 1}</span>`
         }
       }, {
@@ -43,7 +43,7 @@ export default {
         columns: [{
           prop: 'title',
           label: '标题',
-          renderCell(h, {row, column, $index}) {
+          renderCell (h, {row, column, $index}) {
             return row[column.property].substring(0, 8) + '...'
           }
         }, {
@@ -54,10 +54,10 @@ export default {
     }
   },
   computed: {
-    random() {
+    random () {
       return this.$store.state.random
     },
-    mockData() {
+    mockData () {
       let data = []
       for (let i = 0; i < 100; i++) {
         data.push({
@@ -68,10 +68,10 @@ export default {
     }
   },
   methods: {
-    openTab() {
+    openTab () {
       this.$emit('openTab', '/order/records', {orderNumber: 9999})
     },
-    routerPush() {
+    routerPush () {
       this.$router.push({
         path: '/order/records',
         query: {
@@ -79,11 +79,11 @@ export default {
         }
       })
     },
-    randomData() {
+    randomData () {
       let random = Math.random()
       this.$store.dispatch('setData', {random})
     },
-    fetchData({page, size, setData, setTotal}) {
+    fetchData ({page, size, setData, setTotal}) {
       // this.$ajax.get('api/news', {
       //   _start: (page - 1) * size,
       //   _limit: size
@@ -93,7 +93,7 @@ export default {
       // })
     }
   },
-  mounted() {
+  mounted () {
     this.$refs.tfTable.clearSelection()
   }
 }

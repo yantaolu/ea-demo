@@ -7,7 +7,3 @@ export default {
   name: 'status-management'
 }
 </script>
-
-<style scoped>
-
-</style>

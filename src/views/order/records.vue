@@ -60,14 +60,14 @@
 </template>
 
 <script>
-import DateUtil from '../../utils/date-util.js';
+import DateUtil from '../../utils/date-util.js'
 
 export default {
   name: 'order-records',
   props: {
     query: Object
   },
-  data() {
+  data () {
     return {
       condition: {
         orderNumber: '',
@@ -81,7 +81,7 @@ export default {
         type: 'index',
         label: 'No.',
         // hidden: true,
-        renderCell(h, {row, column, $index}) {
+        renderCell (h, {row, column, $index}) {
           return `<span>${$index + 1}</span>`
         }
       }, {
@@ -106,7 +106,7 @@ export default {
     }
   },
   computed: {
-    timeDiff() {
+    timeDiff () {
       let orderTime = this.condition.orderTime
       if (orderTime && orderTime[0] && orderTime[1]) {
         return orderTime[1] - orderTime[0]
@@ -115,7 +115,7 @@ export default {
     }
   },
   watch: {
-    timeDiff(val) {
+    timeDiff (val) {
       if (val > DateUtil.threeMonth) {
         let start = new Date(this.condition.orderTime[0])
         this.condition.orderTime.splice(1, 1, new Date(start.getTime() + DateUtil.threeMonth))
@@ -123,7 +123,7 @@ export default {
     }
   },
   methods: {
-    fetchData({page, size, setData, setTotal}) {
+    fetchData ({page, size, setData, setTotal}) {
       this.loading = true
       this.$ajax.get('api/news', {
         _start: (page - 1) * size,
@@ -140,7 +140,7 @@ export default {
       console.log(this.condition)
     }
   },
-  mounted() {
+  mounted () {
     // this.$ajax.post('api/1', {
     //   sss: 'ssss'
     // }).then(d => {

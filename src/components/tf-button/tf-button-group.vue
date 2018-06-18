@@ -12,7 +12,3 @@ export default {
   components: {[ButtonGroup.name]: ButtonGroup}
 }
 </script>
-
-<style scoped>
-
-</style>

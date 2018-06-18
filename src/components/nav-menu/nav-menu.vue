@@ -32,11 +32,11 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {}
   },
   methods: {
-    handleMenuSelect(index) {
+    handleMenuSelect (index) {
       this.$emit('handleMenuSelect', index)
     }
   }

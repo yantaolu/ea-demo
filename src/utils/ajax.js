@@ -12,7 +12,7 @@ const instance = axios.create({
   transformRequest: data => qs.stringify(data)
 })
 const ajax = {
-  fetch(url = '/', data = {}, method = 'GET') {
+  fetch (url = '/', data = {}, method = 'GET') {
     let ops = {
       url,
       method: method.toUpperCase()
@@ -55,16 +55,16 @@ const ajax = {
       })
     })
   },
-  get(url, data) {
+  get (url, data) {
     return this.fetch(url, data)
   },
-  post(url, data) {
+  post (url, data) {
     return this.fetch(url, data, 'POST')
   }
 }
 
 export default {
-  install(Vue) {
+  install (Vue) {
     Vue.prototype.$ajax = ajax
   }
 }

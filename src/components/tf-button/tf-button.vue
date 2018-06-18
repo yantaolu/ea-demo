@@ -46,11 +46,10 @@ export default {
     },
     authorityCode: String
   },
-  mounted() {
-    this.$route.path
+  mounted () {
   },
   methods: {
-    handleClick() {
+    handleClick () {
       this.$emit('click')
     }
   }

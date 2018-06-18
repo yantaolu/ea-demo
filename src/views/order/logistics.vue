@@ -52,7 +52,7 @@ import BMapLib from 'bmapLib'
 
 export default {
   name: 'logistics-tracking',
-  data() {
+  data () {
     return {
       columns: [{
         type: 'index',
@@ -71,62 +71,63 @@ export default {
         label: '备注'
       }],
       condition: {
-        status: '',
+        status: ''
 
       }
     }
   },
-  mounted() {
+  mounted () {
     this.drawLocus()
   },
   methods: {
-    getMapElement() {
+    getMapElement () {
       return this.$el.querySelector('#allmap')
     },
-    initMap() {
+    initMap () {
       // 百度地图API功能
-      var map = new BMap.Map(this.getMapElement())
+      let map = new BMap.Map(this.getMapElement())
       map.enableScrollWheelZoom()
 
-      var polyline = new BMap.Polyline([
+      let polyline = new BMap.Polyline([
         new BMap.Point(116.399, 39.910),
         new BMap.Point(116.405, 39.920),
         new BMap.Point(116.423493, 39.907445)
-      ], {strokeColor: 'blue', strokeWeight: 2, strokeOpacity: 0.5})   //创建折线
-      map.addOverlay(polyline)   //增加折线
+      ], {strokeColor: 'blue', strokeWeight: 2, strokeOpacity: 0.5}) // 创建折线
+      map.addOverlay(polyline) // 增加折线
 
-      var polygon = new BMap.Polygon([
+      let polygon = new BMap.Polygon([
         new BMap.Point(116.387112, 39.920977),
         new BMap.Point(116.385243, 39.913063),
         new BMap.Point(116.394226, 39.917988),
         new BMap.Point(116.401772, 39.921364),
         new BMap.Point(116.41248, 39.927893)
-      ], {strokeColor: 'blue', strokeWeight: 2, strokeOpacity: 0.5})  //创建多边形
-      map.addOverlay(polygon)   //增加多边形
+      ], {strokeColor: 'blue', strokeWeight: 2, strokeOpacity: 0.5}) // 创建多边形
+      map.addOverlay(polygon) // 增加多边形
     },
-    drawLocus() {
-      var map = new BMap.Map(this.getMapElement())
+    drawLocus () {
+      let map = new BMap.Map(this.getMapElement())
       map.enableScrollWheelZoom()
-      var lushu
+      // eslint-disable-next-line
+      let lushu = null
       // 实例化一个驾车导航用来生成路线
-      var drv = new BMap.DrivingRoute('北京', {
+      let drv = new BMap.DrivingRoute('北京', {
         onSearchComplete: function (res) {
-          if (drv.getStatus() == BMAP_STATUS_SUCCESS) {
-            var plan = res.getPlan(0)
-            var arrPois = []
+          if (drv.getStatus() === 'BMAP_STATUS_SUCCESS') {
+            let plan = res.getPlan(0)
+            let arrPois = []
             for (var j = 0; j < plan.getNumRoutes(); j++) {
-              var route = plan.getRoute(j)
+              let route = plan.getRoute(j)
               arrPois = arrPois.concat(route.getPath())
             }
             map.addOverlay(new BMap.Polyline(arrPois, {strokeColor: '#3a5aff'}))
             map.setViewport(arrPois)
 
             lushu = new BMapLib.LuShu(map, arrPois, {
-              defaultContent: '',//"从天安门到百度大厦"
-              autoView: true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+              defaultContent: '', // "从天安门到百度大厦"
+              autoView: true, // 是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
               icon: new BMap.Icon('http://lbsyun.baidu.com/jsdemo/img/car.png', new BMap.Size(52, 26), {anchor: new BMap.Size(27, 13)}),
               speed: 4500,
-              enableRotation: true,//是否设置marker随着道路的走向进行旋转
+              enableRotation: true, // 是否设置marker随着道路的走向进行旋转
               landmarkPois: [
                 {lng: 116.314782, lat: 39.913508, html: '加油站', pauseTime: 2},
                 {lng: 116.315391, lat: 39.964429, html: '高速公路收费<div><img src="http://map.baidu.com/img/logo-map.gif"/></div>', pauseTime: 3},

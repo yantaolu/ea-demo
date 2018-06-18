@@ -16,7 +16,7 @@ const components = [
   TfTabsPane
 ]
 export default {
-  install(Vue) {
+  install (Vue) {
     components.forEach(component => {
       Vue.component(component.name, component)
     })

@@ -34,7 +34,7 @@ console.log(menuTree)
 export default {
   name: 'role-management',
   components: {TfButton, TfTable},
-  data() {
+  data () {
     return {
       columns: [{
         type: 'index',
@@ -62,16 +62,15 @@ export default {
         label: 'label'
       }
     }
-
   },
   methods: {
-    createRole() {
+    createRole () {
 
     },
-    editRole({selection, currentRow, oldCurrentRow}) {
+    editRole ({selection, currentRow, oldCurrentRow}) {
       console.log(selection, currentRow, oldCurrentRow)
     },
-    deleteRole({selection, currentRow, oldCurrentRow}) {
+    deleteRole ({selection, currentRow, oldCurrentRow}) {
       console.log(selection, currentRow, oldCurrentRow)
     }
   }

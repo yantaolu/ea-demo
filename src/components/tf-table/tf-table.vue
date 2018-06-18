@@ -15,7 +15,7 @@ const boolean = (val = true) => {
 
 export default {
   name: 'tf-table',
-  render(h) {
+  render (h) {
     const _self = this
     let columns = []
 
@@ -165,7 +165,7 @@ export default {
         'header-contextmenu': (column, event) => {
           let react = _self._table().$el.querySelector('div.el-table__header-wrapper').getBoundingClientRect()
           _self.showContextMenu = true
-          clearTimeout(_self._setTimeoutId)
+          clearTimeout(_self.$_setTimeoutId)
           _self.contextMenuStyle.top = (event.clientY - react.top) + 'px'
           _self.contextMenuStyle.left = (event.clientX - react.left) + 'px'
           _self.contextMenuStyle.opacity = 1
@@ -228,7 +228,7 @@ export default {
       on: {
         '!click': () => {
           _self.contextMenuStyle.opacity = 0
-          _self._setTimeoutId = setTimeout(() => {
+          _self.$_setTimeoutId = setTimeout(() => {
             _self.showContextMenu = false
           }, 500)
         }
@@ -243,15 +243,15 @@ export default {
       table,
       _self.pagination ? <div class="tf-pagination">
         <el-pagination ref="elPagination"
-                       background
-                       on-size-change={_self.handleSizeChange}
-                       on-current-change={_self.handlePageChange}
-                       current-page={_self.currentPage}
-                       page-sizes={_self.pageSizes}
-                       page-size={_self.pageSize}
-                       pager-count={5}
-                       layout="total, prev, pager, next, jumper, sizes"
-                       total={_self.tableTotal}>
+          background
+          on-size-change={_self.handleSizeChange}
+          on-current-change={_self.handlePageChange}
+          current-page={_self.currentPage}
+          page-sizes={_self.pageSizes}
+          page-size={_self.pageSize}
+          pager-count={5}
+          layout="total, prev, pager, next, jumper, sizes"
+          total={_self.tableTotal}>
         </el-pagination>
       </div> : '',
       <transition name="el-fade-in-linear">
@@ -293,7 +293,9 @@ export default {
     defaultSort: {
       type: Object,
       default: () => {
-        order: 'ascending'
+        return {
+          order: 'ascending'
+        }
       }
     },
     tooltipEffect: String,
@@ -305,7 +307,7 @@ export default {
     pagination: boolean(),
     pageSizes: {
       type: Array,
-      default() {
+      default () {
         return [10, 20, 50, 100, 200]
       }
     },
@@ -316,13 +318,13 @@ export default {
     showLoading: boolean(),
     loading: boolean(false)
   },
-  data() {
+  data () {
     return {
       tableData: [],
       tableTotal: 0,
       currentPageSize: 0,
       currentPage: 1,
-      _setTimeoutId: null,
+      $_setTimeoutId: null,
       showContextMenu: false,
       contextMenuStyle: {
         top: 0,
@@ -335,13 +337,13 @@ export default {
     }
   },
   computed: {
-    total() {
+    total () {
       return this.tableData.length
     },
-    tableHeight() {
+    tableHeight () {
       return this.flex ? '200px' : this.height
     },
-    columnIndexes() {
+    columnIndexes () {
       let indexes = {}
       const setIndexes = (columns, pIndex) => {
         columns.forEach((column, index) => {
@@ -360,53 +362,53 @@ export default {
     }
   },
   watch: {
-    data(val) {
+    data (val) {
       this.refreshTableData()
     }
   },
   methods: {
-    _table() {
+    _table () {
       return this.$refs.elTable
     },
-    _pagination() {
+    _pagination () {
       return this.$refs.elPagination
     },
-    _initSelection() {
+    _initSelection () {
       this.selection = null
       this.currentRow = null
       this.oldCurrentRow = null
     },
-    clearSelection() {
+    clearSelection () {
       this._table().clearSelection()
     },
-    toggleRowSelection(row, selected) {
+    toggleRowSelection (row, selected) {
       this._table().toggleRowSelection(row, selected)
     },
-    toggleRowExpansion(row, expanded) {
+    toggleRowExpansion (row, expanded) {
       this._table().toggleRowExpansion(row, expanded)
     },
-    setCurrentRow(row) {
+    setCurrentRow (row) {
       this._table().setCurrentRow(row)
     },
-    clearSort() {
+    clearSort () {
       this._table().clearSort()
     },
-    clearFilter() {
+    clearFilter () {
       this._table().clearFilter()
     },
-    doLayout() {
+    doLayout () {
       this._table().doLayout()
     },
-    sort({prop, order = 'ascending'}) {
+    sort ({prop, order = 'ascending'}) {
       this._table().sort({prop, order})
     },
-    setData(data) {
+    setData (data) {
       this.tableData = data
     },
-    setTotal(total) {
+    setTotal (total) {
       this.tableTotal = total
     },
-    toggleColumnShow(prop, show) {
+    toggleColumnShow (prop, show) {
       if (!prop) {
         return false
       } else if (show) {
@@ -415,18 +417,19 @@ export default {
         this.hideColumn(prop)
       }
     },
-    getColumnIndexes(prop) {
+    getColumnIndexes (prop) {
       let index = this.columnIndexes[prop]
       return index !== undefined ? index.split('-') : null
     },
-    showColumn(prop) {
+    showColumn (prop) {
       let indexes = this.getColumnIndexes(prop)
       if (!indexes) {
         return
       }
       // 递归设置显示
       let column = Object.assign({}, this.columns[indexes[0]])
-      let col, len = indexes.length
+      let col
+      let len = indexes.length
       for (let i = 1; i < len; i++) {
         if (!col) {
           col = column.columns[indexes[i]]
@@ -439,14 +442,16 @@ export default {
       // 调用splice触发更新
       this.columns.splice(indexes[0], 1, column)
     },
-    hideColumn(prop) {
+    hideColumn (prop) {
       let indexes = this.getColumnIndexes(prop)
       if (!indexes) {
         return
       }
       // 找到对应的列，设置隐藏
       let column = indexes && Object.assign({}, this.columns[indexes[0]])
-      let col, len = indexes.length, columns = [column]
+      let col
+      let len = indexes.length
+      let columns = [column]
       for (let i = 1; i < len; i++) {
         if (!col) {
           col = column.columns[indexes[i]]
@@ -473,15 +478,15 @@ export default {
       // 调用splice触发更新
       this.columns.splice(indexes[0], 1, column)
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.currentPageSize = size
       this.refreshTableData()
     },
-    handlePageChange(page) {
+    handlePageChange (page) {
       this.currentPage = page
       this.refreshTableData()
     },
-    refreshTableData() {
+    refreshTableData () {
       this._initSelection()
       let currentPageSize = this.currentPageSize || this.pageSize
       if (this.data instanceof Array) {
@@ -504,7 +509,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     this.refreshTableData()
     if (this.flex) {
     }

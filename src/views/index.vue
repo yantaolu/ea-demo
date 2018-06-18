@@ -18,13 +18,13 @@
 import tabHome from './home'
 import {mapGetters, mapActions} from 'vuex'
 // 路由中已经对标签页路由进行过处理，获取相关数据
-import {components, menus, tabs} from '../routes/index'
+import {components, tabs} from '../routes/index'
 
 export default {
   components: Object.assign({
     tabHome
   }, components),
-  data() {
+  data () {
     return {
       tabsValue: 'tab-home',
       tabs: [],
@@ -40,21 +40,20 @@ export default {
      * 路由更新时，需要更新标签页
      * @param route
      */
-    $route(route) {
+    $route (route) {
       this.handleRouteChange(route)
     }
   },
-  mounted() {
-    console.log('--------------')
+  mounted () {
     this.handleRouteChange(this.$route)
   },
   methods: {
     // 响应路由变化，触发标签页
-    handleRouteChange({name, path, params, query}) {
+    handleRouteChange ({name, path, params, query}) {
       this.updateTabActive({name, path: 'tab-' + path.substring(1).replace(/\//g, '-')}, query, params.refresh)
     },
     // 更新路由状态，由于路由处理中使用了params参数，所以只能通过name去更新路由，否则拿不到params中的tabCode
-    pushRouterState({name = 'index', tabCode, refresh = true, query = {}}) {
+    pushRouterState ({name = 'index', tabCode, refresh = true, query = {}}) {
       this.$router.push({
         name,
         query,
@@ -65,7 +64,7 @@ export default {
       })
     },
     // 从缓存中找到相关的标签页数据
-    findTab(tabCode) {
+    findTab (tabCode) {
       let tab = {}
       this.tabs.forEach(item => {
         if (tabCode === item.name) {
@@ -75,7 +74,7 @@ export default {
       return tab
     },
     // 更新标签页状态，涉及新开以及切换显示
-    updateTabActive({name = 'index', path = 'tab-home'}, query = {}, refresh = true) {
+    updateTabActive ({name = 'index', path = 'tab-home'}, query = {}, refresh = true) {
       let openedIndex = this.openedTabs.findIndex(code => code === path)
       // 当标签页为首页或者已经打开时，切换显示即可，当参数发生改变时会触发更新操作
       if (openedIndex >= 0 || path === 'tab-home') {
@@ -122,7 +121,7 @@ export default {
       this.tabsValue = path
     },
     // 标签页点击时触发
-    handleTabClick(tabCode) {
+    handleTabClick (tabCode) {
       if (tabCode === 'tab-home') {
         this.pushRouterState({name: 'index', refresh: false})
         return
@@ -131,7 +130,7 @@ export default {
       this.pushRouterState({name, tabCode: tabCode.substring(name.length + 5), refresh: false, query: this.findTab(tabCode).query})
     },
     // 标签页删除时触发
-    handleTabRemove(tabCode, currentName) {
+    handleTabRemove (tabCode, currentName) {
       let index = this.openedTabs.findIndex(code => code === tabCode)
       this.openedTabs.splice(index, 1)
       this.tabsValue = currentName
@@ -139,18 +138,18 @@ export default {
       this.handleTabClick(currentName)
     },
     // 标签页调用openTab时触发
-    handleOpenTab(path, query) {
+    handleOpenTab (path, query) {
       this.$router.push({
         path,
         query
       })
     },
     // 标签页刷新时触发
-    handleTabRefresh() {
+    handleTabRefresh () {
 
     },
     // 收缩导航菜单栏
-    toggleSlider(collapse) {
+    toggleSlider (collapse) {
       this.collapse = collapse
       this.sliderWidth = collapse ? 63 : 200
     },

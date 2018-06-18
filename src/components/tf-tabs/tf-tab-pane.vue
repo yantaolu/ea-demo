@@ -8,45 +8,45 @@
 
 <script>
 export default {
-  name: "tf-tab-pane",
+  name: 'tf-tab-pane',
   props: {
     label: String,
     name: String,
     icon: String,
     closable: Boolean
   },
-  data() {
+  data () {
     return {}
   },
   computed: {
-    show() {
+    show () {
       return this.$parent.currentName === this.name
     }
   },
   watch: {
-    label() {
+    label () {
       this.updateNav()
     },
-    name() {
+    name () {
       this.updateNav()
     },
-    icon() {
+    icon () {
       this.updateNav()
     },
-    closable() {
+    closable () {
       this.updateNav()
     }
   },
   methods: {
-    updateNav() {
+    updateNav () {
       this.$parent.updateNav()
     }
   },
-  mounted() {
+  mounted () {
     this.updateNav()
     this.$parent.updateActive(this.name)
   },
-  destroyed() {
+  destroyed () {
     this.$el && this.$el.parentNode && this.$el.parentNode.removeChild(this.$el)
     this.updateNav()
   }

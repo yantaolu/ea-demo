@@ -45,7 +45,7 @@ import {pageMode, menus} from './routes/index'
 
 export default {
   name: 'App',
-  data() {
+  data () {
     return {
       mode: pageMode,
       menuItems: menus,
@@ -61,13 +61,13 @@ export default {
      * 路由更新时，需要更新标签页
      * @param route
      */
-    $route(route) {
+    $route (route) {
       this.updateMenuActive(route.path.substring(1))
     }
   },
   methods: {
     // 更新路由状态，由于路由处理中使用了params参数，所以只能通过name去更新路由，否则拿不到params中的tabCode
-    pushRouterState({name = 'index', tabCode, refresh = true, query = {}}) {
+    pushRouterState ({name = 'index', tabCode, refresh = true, query = {}}) {
       this.$router.push({
         name,
         query,
@@ -78,13 +78,13 @@ export default {
       })
     },
     // 点击菜单时，获取到菜单的code，按照相应的规则进行转换得到路由名称
-    handleMenuSelect(index) {
+    handleMenuSelect (index) {
       let paths = decodeURIComponent(index).split('/').filter(path => path !== '')
       let tabCode = paths.pop() || ''
       this.pushRouterState({name: paths.length ? paths.join('-') : 'index', tabCode: tabCode || ''})
     },
     // 更新菜单的active状态
-    updateMenuActive(code = 'tab-home') {
+    updateMenuActive (code = 'tab-home') {
       this.menu = code
       if (!code || code === 'tab-home') {
         this.$set(this, 'openedIndexes', ['1'])
@@ -99,12 +99,12 @@ export default {
       }
     },
     // 收缩导航菜单栏
-    toggleSlider(collapse) {
+    toggleSlider (collapse) {
       this.collapse = collapse
       this.sliderWidth = collapse ? 63 : 200
     },
     // 登出系统
-    handleLogout() {
+    handleLogout () {
       this.$confirm('是否要登出系统？', '确认', {
         type: 'warning',
         confirmButtonText: '确定',
@@ -116,7 +116,7 @@ export default {
       })
     }
   },
-  mounted() {
+  mounted () {
     this.updateMenuActive(this.$route.path.substring(1))
   }
 }

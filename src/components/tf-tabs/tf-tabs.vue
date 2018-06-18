@@ -28,7 +28,7 @@ import mouseWheelBind from '../../utils/mouse-wheel'
 import _ from 'lodash'
 
 export default {
-  name: "tf-tabs",
+  name: 'tf-tabs',
   props: {
     value: String,
     router: Boolean,
@@ -37,7 +37,7 @@ export default {
       default: '/index/'
     }
   },
-  data() {
+  data () {
     return {
       bars: [],
       currentName: '',
@@ -49,9 +49,9 @@ export default {
     }
   },
   computed: {},
-  created() {
+  created () {
   },
-  mounted() {
+  mounted () {
     this.currentName = this.value
     this.tabs_mounted = true
     this.$el.addEventListener('resize', function () {
@@ -60,20 +60,20 @@ export default {
     this.$refs['tabs-bars'] && mouseWheelBind(this.$refs['tabs-bars'], _.throttle(this.onBarScroll, 100))
   },
   watch: {
-    value(val) {
+    value (val) {
       this.currentName = val
       this.updateActive(val)
     },
-    $route(val) {
+    $route (val) {
       // console.log(val.path.substring(this.path.length))
       // this.router && this.updateActive(val.path.substring(this.path.length))
     }
   },
   methods: {
-    getTabs() {
+    getTabs () {
       return this.$children.filter(item => item.$options.name === 'tf-tab-pane')
     },
-    getBars() {
+    getBars () {
       return this.getTabs().map(pane => {
         return {
           label: pane.label,
@@ -84,12 +84,12 @@ export default {
         }
       })
     },
-    updateNav() {
+    updateNav () {
       this.bars = []
       this.bars.push(...this.getBars())
       this.updateTabBar()
     },
-    updateTabBar() {
+    updateTabBar () {
       this.$nextTick(() => {
         if (!this.$refs['tabs-bars']) return // 页面销毁时
         const navWidth = this.$refs['tabs-bars'].offsetWidth
@@ -99,16 +99,16 @@ export default {
         setTimeout(this.scrollToActiveTab, 20)
       })
     },
-    getCurrentScrollOffset() {
-      const {navStyle} = this;
+    getCurrentScrollOffset () {
+      const {navStyle} = this
       return navStyle.transform
         ? parseInt(Number(navStyle.transform.match(/translateX\(-(\d+(\.\d+)*)px\)/)[1]))
-        : 0;
+        : 0
     },
-    setOffset(value) {
+    setOffset (value) {
       !isNaN(value) && (this.navStyle.transform = `translateX(-${parseInt(value)}px)`)
     },
-    scrollToActiveTab() {
+    scrollToActiveTab () {
       if (!this.nav_scroll) {
         this.setOffset(0)
         return
@@ -117,7 +117,7 @@ export default {
       const nav = this.$refs['tabs-bars']
       const navScroll = this.$refs['tabs-bars-container']
       const activeTab = navScroll.querySelector('li.bar-active')
-      if (!activeTab) return;
+      if (!activeTab) return
 
       const activeTabBounding = activeTab.getBoundingClientRect()
       const navScrollBounding = navScroll.getBoundingClientRect()
@@ -135,7 +135,7 @@ export default {
       }
       newOffset !== undefined && this.setOffset(Math.min(newOffset, max))
     },
-    onBarScroll(e) {
+    onBarScroll (e) {
       if (!this.nav_scroll) return
       let diff = 0
       if (e.deltaX === 0) {
@@ -149,7 +149,7 @@ export default {
         this.scrollToRight(e, 50)
       }
     },
-    scrollToLeft(e, diff = 0) {
+    scrollToLeft (e, diff = 0) {
       let scroll = this.getCurrentScrollOffset()
       const nav = this.$refs['tabs-bars']
       if (diff) {
@@ -158,7 +158,7 @@ export default {
         this.setOffset(Math.max(scroll - (nav.offsetWidth / 2), 0))
       }
     },
-    scrollToRight(e, diff = 0) {
+    scrollToRight (e, diff = 0) {
       const nav = this.$refs['tabs-bars']
       const navScroll = this.$refs['tabs-bars-container']
       let max = navScroll.offsetWidth - (nav.offsetWidth - 60) + 5
@@ -169,7 +169,7 @@ export default {
         this.setOffset(Math.min(scroll + (nav.offsetWidth - 60) / 2, max))
       }
     },
-    updateActive(name) {
+    updateActive (name) {
       if (!this.tabs_mounted) {
         return
       }
@@ -178,11 +178,11 @@ export default {
       })
       this.currentName = name
     },
-    handleClick(bar) {
+    handleClick (bar) {
       this.updateActive(bar.name)
       this.$emit('on-tab-click', bar.name)
     },
-    handleRemove(index) {
+    handleRemove (index) {
       let tabs = this.getTabs()
       let tab = tabs[index]
       tab.$destroy()
@@ -194,7 +194,7 @@ export default {
       this.$emit('on-tab-remove', tab.name, this.currentName)
       this.updateNav()
     },
-    contextMenu() {
+    contextMenu () {
 
     }
   }

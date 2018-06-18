@@ -5,8 +5,8 @@
       <span slot="title">{{item.title}}</span>
     </template>
     <template v-for="(child, i) in item.children">
-      <nav-submenu v-if="child.children && child.children.length" :item="child" :index="child.code"></nav-submenu>
-      <nav-menu-item v-else :item="child" :index="child.code">{{child.title}}</nav-menu-item>
+      <nav-submenu v-if="child.children && child.children.length" :key="'child-sub-' + item.code + i" :item="child" :index="child.code"></nav-submenu>
+      <nav-menu-item v-else :item="child" :key="'child-item-' + item.code + i" :index="child.code">{{child.title}}</nav-menu-item>
     </template>
   </el-submenu>
 </template>

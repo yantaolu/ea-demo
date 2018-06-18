@@ -1,4 +1,6 @@
-let prefix = '', _addEventListener, onwheel, support
+let prefix = ''
+let _addEventListener
+let support
 
 if (window.addEventListener) {
   _addEventListener = 'addEventListener'
@@ -18,24 +20,21 @@ if (!support) {
   support = 'DOMMouseScroll'
 }
 
-
 let _addWheelListener = (elem, eventName, callback, useCapture = false) => {
-  elem[_addEventListener](prefix + eventName, support == 'wheel' ? callback : function(originalEvent) {
+  elem[_addEventListener](prefix + eventName, support === 'wheel' ? callback : function (originalEvent) {
     !originalEvent && (originalEvent = window.event)
     let event = {
       originalEvent: originalEvent,
       target: originalEvent.target || originalEvent.srcElement,
       type: 'wheel',
-      deltaMode: originalEvent.type == 'MozMousePixelScroll' ? 0 : 1,
+      deltaMode: originalEvent.type === 'MozMousePixelScroll' ? 0 : 1,
       deltaX: 0,
       delatZ: 0,
-      preventDefault: function() {
-        originalEvent.preventDefault ?
-          originalEvent.preventDefault() :
-          originalEvent.returnValue = false
+      preventDefault: function () {
+        originalEvent.preventDefault ? originalEvent.preventDefault() : originalEvent.returnValue = false
       }
     }
-    if (support == 'mousewheel') {
+    if (support === 'mousewheel') {
       event.deltaY = -1 / 40 * originalEvent.wheelDelta
       originalEvent.wheelDeltaX && (event.deltaX = -1 / 40 * originalEvent.wheelDeltaX)
     } else {
@@ -52,9 +51,9 @@ let _addWheelListener = (elem, eventName, callback, useCapture = false) => {
  * @param callback 回调函数
  * @param useCapture 是否捕获阶段
  */
-export default function mouseWheelBind(el, callback, useCapture = false) {
+export default function mouseWheelBind (el, callback, useCapture = false) {
   let fn = callback.bind(el)
-  if (support == 'DOMMouseScroll') {
+  if (support === 'DOMMouseScroll') {
     _addWheelListener(el, 'MozMousePixelScroll', fn, useCapture)
   } else {
     _addWheelListener(el, support, fn, useCapture)

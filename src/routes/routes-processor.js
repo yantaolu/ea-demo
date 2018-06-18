@@ -32,6 +32,7 @@ export default function (rootRoutes, tabRoutes) {
       if (!path) {
         return true
       }
+      // eslint-disable-next-line
       valid.push(...path.replace(/^[\s\/]+/, '').replace(/[\s\/]+$/, '').split('/'))
     })
     return valid

@@ -8,6 +8,7 @@ const tabRoutes = (req => {
     .keys()
     .map(key => req(key).default)
   return routes
+  // eslint-disable-next-line
 })(require.context('./', true, /\-route\.js$/))
 
 // 原始路由配置，可以使用相应的方法将tabRoutes扩展进去

@@ -48,18 +48,18 @@
 export default {
   name: 'tf-header',
   props: {},
-  data() {
+  data () {
     return {
       collapse: false,
       showItems: false
     }
   },
   methods: {
-    toggleSlider() {
+    toggleSlider () {
       this.collapse = !this.collapse
       this.$emit('toggleSlider', this.collapse)
     },
-    logout() {
+    logout () {
       this.$emit('logout')
     }
   }

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "menu-management"
+  name: 'menu-management'
 }
 </script>
 

@@ -12,13 +12,13 @@ const state = {
 }
 
 const mutations = {
-  [SET_DATA](state, d) {
+  [SET_DATA] (state, d) {
     state.random = d
   }
 }
 
 const actions = {
-  setData({commit}, {random}) {
+  setData ({commit}, {random}) {
     commit(SET_DATA, random)
   }
 }
