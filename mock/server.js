@@ -1,17 +1,14 @@
-const path = require('path')
 const jsonServer = require('json-server')
-const os = require('os')
 const rules = require('./routes')
 const utils = require('../build/utils')
 const data = require('./data')
 
-const ip = utils.getLocalIP() || 'localhost'
 const port = 3000
 
 const server = jsonServer.create()
 const router = jsonServer.router(data())
 
-//中间件
+// 中间件
 const middlewares = jsonServer.defaults()
 
 server.use(jsonServer.bodyParser)
@@ -31,13 +28,13 @@ router.render = (req, res) => {
 }
 
 // 模拟api接口，就是访问api的时候给制定路由规则
-server.use("/api", router)
+server.use('/api', router)
 server.use(jsonServer.rewriter(rules))
 server.use(router)
 
 server.listen({
-  host: ip,
-  port: port,
+  host: '0.0.0.0',
+  port: port
 }, function () {
-  console.log(`JSON Server is running in http://${ip}:${port}`)
+  console.log(`JSON Server is running in http://${utils.getLocalIP()}:${port}`)
 })

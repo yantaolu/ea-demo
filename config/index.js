@@ -3,37 +3,22 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const os = require('os')
-
-const getLocalIP = () => {
-  let IPv4, items
-  if (/windows/i.test(process.env.OS)) {
-    items = os.networkInterfaces() && os.networkInterfaces().WLAN
-  } else {
-    items = os.networkInterfaces() && os.networkInterfaces().en0
-  }
-  items && items.forEach(item => {
-    item.family === 'IPv4' && (IPv4 = item.address)
-  })
-  return IPv4
-}
 
 module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
     proxyTable: {
       '/api/*': {
-        target: `http://${getLocalIP()}:3000`, // 根据实际情况修改
+        target: `http://0.0.0.0:3000`, // 根据实际情况修改，默认本地服务
         changeOrigin: true,
         secure: false
       }
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
     port: 8888, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -43,7 +28,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
-    useEslint: true,
+    useEslint: false,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,
@@ -66,14 +51,14 @@ module.exports = {
   build: {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
