@@ -194,7 +194,6 @@ module.exports = {
     },
 
     // 开发环境配置
-    host: "localhost", // linux默认不需要修改，utils内有获取本地IP的方法
     port: 8888 // 根据实际情况修改
     // ...
   }
