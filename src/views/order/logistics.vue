@@ -49,7 +49,7 @@
 <script>
 import BMap from 'bmap'
 import BMapLib from 'bmapLib'
-
+const BMAP_STATUS_SUCCESS = 0
 export default {
   name: 'logistics-tracking',
   data () {
@@ -112,7 +112,7 @@ export default {
       // 实例化一个驾车导航用来生成路线
       let drv = new BMap.DrivingRoute('北京', {
         onSearchComplete: function (res) {
-          if (drv.getStatus() === 'BMAP_STATUS_SUCCESS') {
+          if (drv.getStatus() === BMAP_STATUS_SUCCESS) {
             let plan = res.getPlan(0)
             let arrPois = []
             for (var j = 0; j < plan.getNumRoutes(); j++) {
