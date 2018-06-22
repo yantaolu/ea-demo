@@ -9,97 +9,158 @@ const instance = axios.create({
   timeout: 30 * 1000
 })
 
-const ajax = {
-  fetch (url = '/', data = {}, method = 'GET', postType = 'formData') {
-    let ops = {
-      url,
-      method: method.toUpperCase()
-    }
-    if (method.toUpperCase() === 'POST') {
-      ops.data = data
-      if (postType === 'formData') {
-        Object.assign(ops, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          transformRequest: data => qs.stringify(data)
-        })
-      }
-    } else {
-      if (data.__cache__ === false) {
-        Object.assign(data, {_: new Date().getTime()})
-      }
-      delete data.__cache__
-      ops.params = data
-    }
+/**
+ * ajax请求
+ * @param url 请求地址
+ * @param data 请求参数 / 提交数据
+ * @param ops 附加参数 {method = 'GET', type = 'formData', cache = false, loading = false}
+ * @returns {Promise}
+ */
+const fetch = (url = '/', data = {}, {method = 'GET', type = 'formData', cache = false, loading = false} = {}) => {
+  let ops = {
+    url,
+    method: method.toUpperCase()
+  }
 
-    return new Promise((resolve, reject) => {
-      let loading = Loading.service({
-        fullscreen: true,
-        text: '数据加载中...',
-        background: 'rgba(255,255,255,0)'
+  // `data` 是作为请求主体被发送的数据
+  // 只适用于这些请求方法 'PUT', 'POST', 和 'PATCH'
+  if (['PUT', 'POST', 'PATCH'].includes(method.toUpperCase())) {
+    ops.data = data
+    if (type === 'formData') {
+      Object.assign(ops, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: data => qs.stringify(data)
       })
-      instance(ops).then(res => {
-        if (res.status === 200) {
-          resolve(res.data)
-        } else {
-          reject(res.statusText)
-        }
-      }).catch(e => {
-        let status = e && e.response && e.response.status
-        switch (status) {
-          case 400:
-            console.error('请求错误')
-            break
-          case 404:
-            console.error('请求路径不存在')
-            break
-          case 500:
-            console.error('系统错误')
-            break
-          case 504:
-            console.error('请求超时')
-            break
-          default:
-            console.error((e.response && e.response.statusText) || status)
-            break
-        }
-        reject(e)
-      }).finally(() => {
-        loading.close()
-      })
+    }
+  } else {
+    // 请求是否使用缓存，默认不缓存，请求参数增加时间戳
+    if (cache === false) {
+      Object.assign(data, {_: new Date().getTime()})
+    }
+    ops.params = data
+  }
+
+  return new Promise((resolve, reject) => {
+    let $loading = loading && Loading.service({
+      fullscreen: true,
+      text: '数据加载中...',
+      background: 'rgba(255,255,255,0)'
     })
-  },
+    instance(ops).then(res => {
+      if (res.status === 200) {
+        resolve(res.data)
+      } else {
+        reject(res.statusText)
+      }
+    }).catch(e => {
+      let status = e && e.response && e.response.status
+      switch (status) {
+        case 400:
+          console.error('请求错误')
+          break
+        case 404:
+          console.error('请求路径不存在')
+          break
+        case 500:
+          console.error('系统错误')
+          break
+        case 504:
+          console.error('请求超时')
+          break
+        default:
+          console.error((e.response && e.response.statusText) || status)
+          break
+      }
+      reject(e)
+    }).finally(() => {
+      $loading && $loading.close()
+    })
+  })
+}
+
+const ajax = {
   /**
-   * GET请求
+   * XmlRequest请求，默认get请求
    * @param url 地址
    * @param data 参数
-   * @param cache 是否缓存，默认不缓存
+   * @param ops 附加属性
    * @returns {Promise}
    */
-  get (url, data, cache = false) {
-    Object.assign(data, {__cache__: cache})
-    return this.fetch(url, data)
-  },
+  request: (url = '', data = {}, ops = {}) => fetch(url, data, ops),
   /**
-   * POST请求
+   * XmlRequest get请求
    * @param url 地址
-   * @param data  数据
-   * @param type post类型，json或者formData，默认以formData的形式提交请求
+   * @param data 参数
+   * @param ops 附加属性
    * @returns {Promise}
    */
-  post (url, data, type = 'formData') {
-    return this.fetch(url, data, 'POST', type)
-  },
+  get: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'GET'}),
   /**
-   * 以JSON方式提交post请求
+   * XmlRequest delete请求
    * @param url 地址
-   * @param data 数据
+   * @param data 参数
+   * @param ops 附加属性
    * @returns {Promise}
    */
-  postJson (url, data) {
-    return this.post(url, data, 'json')
-  }
+  delete: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'DELETE'}),
+  /**
+   * XmlRequest head请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  head: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'HEAD'}),
+  /**
+   * XmlRequest post请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  post: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'POST'}),
+  /**
+   * XmlRequest 以json格式传参post请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  postJson: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'POST', type: 'json'}),
+  /**
+   * XmlRequest put请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  put: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'PUT'}),
+  /**
+   * XmlRequest 以json格式传参put请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  putJson: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'PUT', type: 'json'}),
+  /**
+   * XmlRequest patch请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  patch: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'PATCH'}),
+  /**
+   * XmlRequest 以json格式传参patch请求
+   * @param url 地址
+   * @param data 参数
+   * @param ops 附加属性
+   * @returns {Promise}
+   */
+  patchJson: (url = '', data = {}, ops = {}) => fetch(url, data, {...ops, method: 'PATCH', type: 'json'})
 }
 
 const $ajax = {
