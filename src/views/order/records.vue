@@ -36,7 +36,7 @@
     </section>
 
     <section class="list-area">
-      <tf-table :columns="columns" :data="fetchData" :loading="loading" flex border></tf-table>
+      <tf-table ref="order-list" :columns="columns" :data="fetchData" :loading="loading" flex border></tf-table>
     </section>
 
     <el-dialog title="订单明细" :visible.sync="dialogFormVisible">
@@ -138,6 +138,7 @@ export default {
     },
     queryData () {
       console.log(this.condition)
+      this.$refs['order-list'].reload()
     }
   },
   mounted () {

@@ -7,12 +7,12 @@ import Router from 'vue-router'
 import store from './store/index'
 import ElementUI from 'element-ui'
 import TfComponents from './components/tf-components'
-import ajax from './utils/ajax'
+import {$ajax} from './utils/ajax'
 
 Vue.use(Router)
 Vue.use(ElementUI, {size: 'small'})
 Vue.use(TfComponents)
-Vue.use(ajax)
+Vue.use($ajax)
 
 const router = new Router({
   mode: 'history',

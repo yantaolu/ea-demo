@@ -251,7 +251,7 @@ export default {
           page-size={_self.pageSize}
           pager-count={5}
           layout="total, prev, pager, next, jumper, sizes"
-          total={_self.tableTotal}>
+          total={_self.total}>
         </el-pagination>
       </div> : '',
       <transition name="el-fade-in-linear">
@@ -267,12 +267,16 @@ export default {
       type: Array | Function,
       default: () => []
     },
+    params: {
+      type: Object,
+      default: () => {}
+    },
     autoLoad: boolean(),
     flex: boolean(false),
     height: String | Number,
     maxHeight: String | Number,
     stripe: boolean(false),
-    border: boolean(false),
+    border: boolean(),
     size: String,
     fit: boolean(),
     showHeader: boolean(),
@@ -321,7 +325,7 @@ export default {
   data () {
     return {
       tableData: [],
-      tableTotal: 0,
+      total: 0,
       currentPageSize: 0,
       currentPage: 1,
       $_setTimeoutId: null,
@@ -337,9 +341,6 @@ export default {
     }
   },
   computed: {
-    total () {
-      return this.tableData.length
-    },
     tableHeight () {
       return this.flex ? '200px' : this.height
     },
@@ -363,7 +364,10 @@ export default {
   },
   watch: {
     data (val) {
-      this.refreshTableData()
+      this.reload()
+    },
+    params () {
+      this.reload()
     }
   },
   methods: {
@@ -377,6 +381,9 @@ export default {
       this.selection = null
       this.currentRow = null
       this.oldCurrentRow = null
+    },
+    _getPageSize () {
+      return this.currentPageSize || this.pageSize
     },
     clearSelection () {
       this._table().clearSelection()
@@ -406,7 +413,7 @@ export default {
       this.tableData = data
     },
     setTotal (total) {
-      this.tableTotal = total
+      this.total = total
     },
     toggleColumnShow (prop, show) {
       if (!prop) {
@@ -480,45 +487,69 @@ export default {
     },
     handleSizeChange (size) {
       this.currentPageSize = size
-      this.refreshTableData()
+      this.reload()
     },
     handlePageChange (page) {
       this.currentPage = page
-      this.refreshTableData()
+      this.refresh()
     },
-    refreshTableData () {
+    // 刷新，不改变页码
+    refresh () {
       this._initSelection()
-      let currentPageSize = this.currentPageSize || this.pageSize
       if (this.data instanceof Array) {
-        // 静态数据需要分页的情况
-        if (this.pagination) {
-          this.setTotal(this.data.length)
-          let start = (this.currentPage - 1) * currentPageSize
-          let end = Math.min(this.currentPage * currentPageSize, this.tableTotal)
-          this.setData(this.data.slice(start, end))
-        } else {
-          this.setData(this.data)
-        }
+        this._fillArray()
       } else if (this.data instanceof Function) {
-        this.data({
+        this._fetchData()
+      }
+    },
+    // 填充静态数组数据
+    _fillArray () {
+      // 需要分页的情况
+      if (this.pagination) {
+        this.setTotal(this.data.length)
+        let start = (this.currentPage - 1) * this._getPageSize()
+        let end = Math.min(this.currentPage * this._getPageSize(), this.total)
+        this.setData(this.data.slice(start, end))
+      } else {
+        this.setData(this.data)
+      }
+    },
+    // 调用数据接口获取数据
+    _fetchData () {
+      let query = {
+        setData: this.setData,
+        setTotal: this.setTotal,
+        params: this.params
+      }
+      if (this.pagination) {
+        Object.assign(query, {
           page: this.currentPage,
-          size: currentPageSize,
-          setData: this.setData,
-          setTotal: this.setTotal
+          size: this._getPageSize()
         })
+      }
+      this.data(query)
+    },
+    reload () {
+      this.currentPage = 1
+      this.refresh()
+    },
+    goTo (page = 1) {
+      if (!this.pagination) {
+        throw new Error('Please set the prop "pagination" to true then call this function.')
+      }
+      if (page > 0 && page <= Math.max(1, Math.ceil(this.total / this._getPageSize()))) {
+        this.currentPage = page
+        this.refresh()
       }
     }
   },
   mounted () {
-    this.refreshTableData()
-    if (this.flex) {
-    }
+    this.reload()
   }
 }
 </script>
 
 <style lang="scss">
-
 .tf-table {
   position: relative;
   .tf-table-header-context-menu {
@@ -531,7 +562,7 @@ export default {
     max-height: 200px;
     overflow-x: hidden;
     overflow-y: auto;
-    transition: opacity .3s ease-in;
+    transition: opacity 0.3s ease-in;
 
     ul {
       list-style: none;
@@ -563,7 +594,7 @@ export default {
     align-items: center;
     font-size: 40px;
     color: #ccc;
-    background: rgba(200, 200, 200, .1);
+    background: rgba(200, 200, 200, 0.1);
   }
 }
 

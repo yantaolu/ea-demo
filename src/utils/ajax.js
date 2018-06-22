@@ -1,31 +1,44 @@
 import Promise from 'bluebird'
 import axios from 'axios'
 import qs from 'query-string'
+import {Loading} from 'element-ui'
 
 const baseURL = '/'
 const instance = axios.create({
   baseURL,
-  timeout: 30 * 1000,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  transformRequest: data => qs.stringify(data)
+  timeout: 30 * 1000
 })
+
 const ajax = {
-  fetch (url = '/', data = {}, method = 'GET') {
+  fetch (url = '/', data = {}, method = 'GET', postType = 'formData') {
     let ops = {
       url,
       method: method.toUpperCase()
     }
     if (method.toUpperCase() === 'POST') {
-      if (data._cache !== false) {
+      ops.data = data
+      if (postType === 'formData') {
+        Object.assign(ops, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          transformRequest: data => qs.stringify(data)
+        })
+      }
+    } else {
+      if (data.__cache__ === false) {
         Object.assign(data, {_: new Date().getTime()})
       }
-      ops.data = data
-    } else {
+      delete data.__cache__
       ops.params = data
     }
+
     return new Promise((resolve, reject) => {
+      let loading = Loading.service({
+        fullscreen: true,
+        text: '数据加载中...',
+        background: 'rgba(255,255,255,0)'
+      })
       instance(ops).then(res => {
         if (res.status === 200) {
           resolve(res.data)
@@ -52,19 +65,49 @@ const ajax = {
             break
         }
         reject(e)
+      }).finally(() => {
+        loading.close()
       })
     })
   },
-  get (url, data) {
+  /**
+   * GET请求
+   * @param url 地址
+   * @param data 参数
+   * @param cache 是否缓存，默认不缓存
+   * @returns {Promise}
+   */
+  get (url, data, cache = false) {
+    Object.assign(data, {__cache__: cache})
     return this.fetch(url, data)
   },
-  post (url, data) {
-    return this.fetch(url, data, 'POST')
+  /**
+   * POST请求
+   * @param url 地址
+   * @param data  数据
+   * @param type post类型，json或者formData，默认以formData的形式提交请求
+   * @returns {Promise}
+   */
+  post (url, data, type = 'formData') {
+    return this.fetch(url, data, 'POST', type)
+  },
+  /**
+   * 以JSON方式提交post请求
+   * @param url 地址
+   * @param data 数据
+   * @returns {Promise}
+   */
+  postJson (url, data) {
+    return this.post(url, data, 'json')
   }
 }
 
-export default {
+const $ajax = {
   install (Vue) {
     Vue.prototype.$ajax = ajax
   }
 }
+
+export {$ajax}
+
+export default ajax

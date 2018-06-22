@@ -107,7 +107,9 @@ tf-table Methods
 :---|:---|:---
 setData|设置列表显示的数据|Array
 setTotal|设置分页列表数据总数|Number
-refreshTableData|加载/刷新列表数据|-
+refresh|加载/刷新当前页列表数据|-
+reload|重新加载数据，从第一页开始|-
+goTo|加载第n页数据|Number
 showColumn|显示列|String: columnProp
 hideColumn|隐藏列|String: columnProp
 
