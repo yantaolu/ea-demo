@@ -8,6 +8,9 @@ import store from './store/index'
 import TfComponents from 'tf-components'
 import Components from './components/custom-components'
 import {$ajax} from './utils/ajax'
+// import locale from 'tf-components/lib/locale/lang/en'
+// font-awesome 字体图标库
+import 'tf-components/lib/css/font-awesome.min.css'
 
 Vue.use(Router)
 Vue.use(TfComponents, {size: 'small'})
