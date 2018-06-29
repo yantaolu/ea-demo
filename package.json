@@ -14,9 +14,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
-    "element-ui": "^2.4.1",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.10",
+    "tf-components": "^0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

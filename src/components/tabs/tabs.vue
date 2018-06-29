@@ -1,11 +1,11 @@
 <template>
-  <div class="tf-tabs">
-    <div class="tf-tabs-bars" ref="tabs-bars" :class="{'scroll': nav_scroll}">
-      <div v-show="nav_scroll" class="tf-tabs-nav-prev" @click="scrollToLeft">
+  <div class="custom-tabs">
+    <div class="custom-tabs-bars" ref="tabs-bars" :class="{'scroll': nav_scroll}">
+      <div v-show="nav_scroll" class="custom-tabs-nav-prev" @click="scrollToLeft">
         <i class="el-icon-arrow-left"></i>
       </div>
-      <ul class="tf-tabs-bars-container" ref="tabs-bars-container" :style="navStyle">
-        <li v-for="(bar, i) in bars" class="tf-tab-bar" :class="{'bar-active': bar.active}" :key="'tf-tabs-bar-' + i"
+      <ul class="custom-tabs-bars-container" ref="tabs-bars-container" :style="navStyle">
+        <li v-for="(bar, i) in bars" class="tf-tab-bar" :class="{'bar-active': bar.active}" :key="'custom-tabs-bar-' + i"
             @click.stop="handleClick(bar)" @contextmenu.prevent="contextMenu">
           <i v-if="bar.icon" class="ivu-icon" :class="'ivu-icon-' + bar.icon"></i>
           <i class="fa" :class="'fa-' + bar.icon"></i>
@@ -13,11 +13,11 @@
           <i v-if="bar.closable" class="el-icon-close" @click.stop="handleRemove(i)"></i>
         </li>
       </ul>
-      <div v-show="nav_scroll" class="tf-tabs-nav-next" @click="scrollToRight">
+      <div v-show="nav_scroll" class="custom-tabs-nav-next" @click="scrollToRight">
         <i class="el-icon-arrow-right"></i>
       </div>
     </div>
-    <div class="tf-tabs-contents">
+    <div class="custom-tabs-contents">
       <slot></slot>
     </div>
   </div>
@@ -28,7 +28,7 @@ import mouseWheelBind from '../../utils/mouse-wheel'
 import _ from 'lodash'
 
 export default {
-  name: 'tf-tabs',
+  name: 'custom-tabs',
   props: {
     value: String,
     router: Boolean,
@@ -54,9 +54,6 @@ export default {
   mounted () {
     this.currentName = this.value
     this.tabs_mounted = true
-    this.$el.addEventListener('resize', function () {
-      console.log('-----')
-    })
     this.$refs['tabs-bars'] && mouseWheelBind(this.$refs['tabs-bars'], _.throttle(this.onBarScroll, 100))
   },
   watch: {
@@ -71,7 +68,7 @@ export default {
   },
   methods: {
     getTabs () {
-      return this.$children.filter(item => item.$options.name === 'tf-tab-pane')
+      return this.$children.filter(item => item.$options.name === 'custom-tab-pane')
     },
     getBars () {
       return this.getTabs().map(pane => {
@@ -203,7 +200,7 @@ export default {
 
 <style lang="scss">
 
-.tf-tabs {
+.custom-tabs {
   flex: auto;
   display: flex;
   flex-direction: column;
@@ -213,7 +210,7 @@ export default {
     box-sizing: border-box;
   }
 
-  .tf-tabs-bars {
+  .custom-tabs-bars {
     user-select: none;
     border-bottom: 1px solid #dddee1;
     overflow: hidden;
@@ -223,7 +220,7 @@ export default {
       padding: 0 30px;
     }
 
-    .tf-tabs-nav-prev, .tf-tabs-nav-next {
+    .custom-tabs-nav-prev, .custom-tabs-nav-next {
       position: absolute;
       width: 30px;
       line-height: 32px;
@@ -238,15 +235,15 @@ export default {
       }
     }
 
-    .tf-tabs-nav-prev {
+    .custom-tabs-nav-prev {
       left: 0;
     }
 
-    .tf-tabs-nav-next {
+    .custom-tabs-nav-next {
       right: 0;
     }
 
-    .tf-tabs-bars-container {
+    .custom-tabs-bars-container {
       list-style: none;
       overflow: hidden;
       white-space: nowrap;
@@ -258,7 +255,7 @@ export default {
     }
   }
 
-  .tf-tabs-contents {
+  .custom-tabs-contents {
     flex: auto;
     position: relative;
     border: 1px solid #dddee1;

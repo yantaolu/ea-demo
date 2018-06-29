@@ -1,24 +1,24 @@
 <template>
   <section class="order-records">
     <section class="query-area">
-      <el-form inline label-width="90px" label-position="right" label-suffix="：" :model="condition">
-        <el-form-item label="订单号">
-          <el-input name="orderNumber" placeholder="订单号" :value="query.orderNumber"></el-input>
-        </el-form-item>
-        <el-form-item label="客户ID">
-          <el-input v-model="condition.customerId" placeholder="客户ID"></el-input>
-        </el-form-item>
-        <el-form-item label="客户名称">
-          <el-input v-model="condition.customerName" placeholder="客户名称"></el-input>
-        </el-form-item>
-        <el-form-item label="客户单号">
-          <el-input v-model="condition.customerOrder" placeholder="客户单号"></el-input>
-        </el-form-item>
+      <tf-form inline labtf-width="90px" labtf-position="right" labtf-suffix="：" :model="condition">
+        <tf-form-item label="订单号">
+          <tf-input name="orderNumber" placeholder="订单号" :value="query.orderNumber"></tf-input>
+        </tf-form-item>
+        <tf-form-item label="客户ID">
+          <tf-input v-model="condition.customerId" placeholder="客户ID"></tf-input>
+        </tf-form-item>
+        <tf-form-item label="客户名称">
+          <tf-input v-model="condition.customerName" placeholder="客户名称"></tf-input>
+        </tf-form-item>
+        <tf-form-item label="客户单号">
+          <tf-input v-model="condition.customerOrder" placeholder="客户单号"></tf-input>
+        </tf-form-item>
 
-      </el-form>
-      <el-form inline label-width="90px" label-position="right" label-suffix="：">
-        <el-form-item label="下单时间">
-          <el-date-picker
+      </tf-form>
+      <tf-form inline labtf-width="90px" labtf-position="right" labtf-suffix="：">
+        <tf-form-item label="下单时间">
+          <tf-date-picker
             v-model="condition.orderTime"
             type="datetimerange"
             :picker-options="pickerOptions"
@@ -27,35 +27,35 @@
             end-placeholder="结束时间"
             :default-time="['00:00:00', '23:59:59']"
             align="right">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button size="medium" type="primary" style="margin: 0 15px;" @click="queryData">查询</el-button>
-        </el-form-item>
-      </el-form>
+          </tf-date-picker>
+        </tf-form-item>
+        <tf-form-item>
+          <tf-button size="medium" type="primary" style="margin: 0 15px;" @click="queryData">查询</tf-button>
+        </tf-form-item>
+      </tf-form>
     </section>
 
     <section class="list-area">
       <tf-table ref="order-list" :columns="columns" :data="fetchData" :loading="loading" flex border></tf-table>
     </section>
 
-    <el-dialog title="订单明细" :visible.sync="dialogFormVisible">
-      <el-form>
-        <el-form-item label="活动名称">
-          <el-input auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select placeholder="请选择活动区域" value="">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
+    <tf-dialog title="订单明细" :visible.sync="dialogFormVisible">
+      <tf-form>
+        <tf-form-item label="活动名称">
+          <tf-input auto-complete="off"></tf-input>
+        </tf-form-item>
+        <tf-form-item label="活动区域">
+          <tf-select placeholder="请选择活动区域" value="">
+            <tf-option label="区域一" value="shanghai"></tf-option>
+            <tf-option label="区域二" value="beijing"></tf-option>
+          </tf-select>
+        </tf-form-item>
+      </tf-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogFormVisible = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <tf-button size="small" @click="dialogFormVisible = false">取 消</tf-button>
+        <tf-button size="small" type="primary" @click="dialogFormVisible = false">确 定</tf-button>
       </div>
-    </el-dialog>
+    </tf-dialog>
   </section>
 </template>
 
@@ -161,12 +161,12 @@ export default {
     margin-top: 10px;
     border-bottom: 1px solid #dfdfdf;
 
-    .el-form--inline {
+    .tf-form--inline {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .el-input {
+    .tf-input {
       /*width: 130px;*/
     }
   }

@@ -12,28 +12,25 @@
     </div>
     <div class="menu-tree">
       <h4>角色菜单</h4>
-      <el-tree
+      <tf-tree
         :data="data2"
         show-checkbox
         node-key="path"
         default-expand-all
         :props="defaultProps">
-      </el-tree>
+      </tf-tree>
 
     </div>
   </div>
 </template>
 
 <script>
-import TfTable from '../../components/tf-table/tf-table'
-import TfButton from '../../components/tf-button/tf-button'
 import {menuTree} from '../../routes/index'
 
 console.log(menuTree)
 
 export default {
   name: 'role-management',
-  components: {TfButton, TfTable},
   data () {
     return {
       columns: [{

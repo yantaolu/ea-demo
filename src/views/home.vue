@@ -8,13 +8,13 @@
       <a href="#" @click.prevent="routerPush">路由push打开标签页1</a>
     </div>
     <div>全局data：{{random}}</div>
-    <el-button @click="randomData" type="primary">改变data</el-button>
-    <el-row>
+    <tf-button @click="randomData" type="primary">改变data</tf-button>
+    <tf-row>
       <tf-button authorityCode>默认按钮</tf-button>
       <tf-button size="medium">中等button</tf-button>
       <tf-button size="small">小型按钮</tf-button>
       <tf-button size="mini">超小按钮</tf-button>
-    </el-row>
+    </tf-row>
     <tf-button-group>
       <tf-button>111</tf-button>
       <tf-button>222</tf-button>

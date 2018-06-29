@@ -1,7 +1,7 @@
 <template>
-  <el-menu-item :index="index">
+  <tf-menu-item :index="index">
     <slot></slot>
-  </el-menu-item>
+  </tf-menu-item>
 </template>
 
 <script>

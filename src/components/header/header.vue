@@ -9,26 +9,26 @@
       </span>
       <div class="user-info">
         <div class="info-item messages">
-          <el-badge :value="200" :max="99" class="item">
+          <tf-badge :value="200" :max="99" class="item">
             <i class="fa fa-envelope-o"></i>
-          </el-badge>
+          </tf-badge>
         </div>
         <div class="info-item notifications">
-          <el-badge :value="10" :max="99" class="item">
+          <tf-badge :value="10" :max="99" class="item">
             <i class="fa fa-bell-o"></i>
-          </el-badge>
+          </tf-badge>
         </div>
         <div class="info-item tasks">
-          <!--<el-badge :value="0" :max="99" class="item">-->
+          <!--<tf-badge :value="0" :max="99" class="item">-->
           <i class="fa fa-flag-o"></i>
-          <!--</el-badge>-->
+          <!--</tf-badge>-->
         </div>
         <div class="info-item login-user" @mouseenter="showItems = true" @mouseleave="showItems = false">
           <span class="head-portrait">
             <img src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"/>
           </span>
           <span class="user-name">鲁延涛</span>
-          <transition name="el-zoom-in-top">
+          <transition name="tf-zoom-in-top">
             <div class="drop-down-items" v-show="showItems">
               <ul>
                 <li><i class="fa fa-user" aria-hidden="true"></i>个人中心</li>
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'tf-header',
+  name: 'custom-header',
   props: {},
   data () {
     return {

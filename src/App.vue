@@ -1,42 +1,42 @@
 <template>
   <div id="app">
-    <el-container class="page-container">
+    <tf-container class="page-container">
       <!--页面头部-->
-      <el-header height="50px">
+      <tf-header height="50px">
         <!---->
-        <tf-header @logout="handleLogout" @toggleSlider="toggleSlider">
+        <custom-header @logout="handleLogout" @toggleSlider="toggleSlider">
           <!--logo定制-->
           <slot slot="logo">
           <span class="slot-logo" :style="{width: sliderWidth + 'px'}">
             <template v-if="!collapse">TF-Vue</template>
           </span>
           </slot>
-        </tf-header>
-      </el-header>
+        </custom-header>
+      </tf-header>
       <!--下部主体部分-->
-      <el-container>
+      <tf-container>
         <!--侧边栏，可缩放-->
-        <el-aside :width="sliderWidth + 'px'" class="page-aside">
+        <tf-aside :width="sliderWidth + 'px'" class="page-aside">
           <div class="nav-menu-container">
             <!--导航菜单，已经实现递归可以支持无限层-->
             <nav-menu :menuItems="menuItems" :openedIndexes="openedIndexes" :menu="menu" :collapse="collapse"
                       @handleMenuSelect="handleMenuSelect"></nav-menu>
           </div>
-        </el-aside>
+        </tf-aside>
         <!--右侧页面容器-->
-        <el-main class="page-content">
+        <tf-main class="page-content">
           <!--如果是单页面模式，则使用面包屑，默认直接加载home页-->
-          <el-breadcrumb v-if="mode === 'single'" separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-          </el-breadcrumb>
+          <tf-breadcrumb v-if="mode === 'single'" separator="/">
+            <tf-breadcrumb-item :to="{ path: '/' }">首页</tf-breadcrumb-item>
+            <tf-breadcrumb-item><a href="/">活动管理</a></tf-breadcrumb-item>
+            <tf-breadcrumb-item>活动列表</tf-breadcrumb-item>
+            <tf-breadcrumb-item>活动详情</tf-breadcrumb-item>
+          </tf-breadcrumb>
           <!--否则加载标签页模式-->
           <router-view/>
-        </el-main>
-      </el-container>
-    </el-container>
+        </tf-main>
+      </tf-container>
+    </tf-container>
   </div>
 </template>
 
@@ -139,6 +139,7 @@ export default {
   overflow: hidden;
   flex: auto;
   display: flex;
+  flex-direction: column;
 
   .slot-logo {
     display: inline-block;

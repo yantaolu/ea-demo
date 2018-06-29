@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'tf-tab-pane',
+  name: 'custom-tab-pane',
   props: {
     label: String,
     name: String,

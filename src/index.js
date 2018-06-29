@@ -5,13 +5,13 @@ import App from './App'
 import rootRoutes from './routes/index'
 import Router from 'vue-router'
 import store from './store/index'
-import ElementUI from 'element-ui'
-import TfComponents from './components/tf-components'
+import TfComponents from 'tf-components'
+import Components from './components/custom-components'
 import {$ajax} from './utils/ajax'
 
 Vue.use(Router)
-Vue.use(ElementUI, {size: 'small'})
-Vue.use(TfComponents)
+Vue.use(TfComponents, {size: 'small'})
+Vue.use(Components)
 Vue.use($ajax)
 
 const router = new Router({

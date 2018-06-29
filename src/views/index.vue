@@ -1,17 +1,17 @@
 <template>
   <!--标签页组件-->
-  <tf-tabs class="tf-tabs-page" :value="tabsValue" @on-tab-click="handleTabClick" @on-tab-remove="handleTabRemove" @on-tab-refresh="handleTabRefresh">
+  <custom-tabs class="tf-tabs-page" :value="tabsValue" @on-tab-click="handleTabClick" @on-tab-remove="handleTabRemove" @on-tab-refresh="handleTabRefresh">
     <!--默认标签页首页-->
-    <tf-tab-pane name="tab-home" icon="home" label="首页">
+    <custom-tab-pane name="tab-home" icon="home" label="首页">
       <tab-home @openTab="handleOpenTab"></tab-home>
-    </tf-tab-pane>
+    </custom-tab-pane>
 
-    <tf-tab-pane v-for="(tab, index) in tabs" :key="'tab-' + index" :name="tab.name" :icon="tab.icon" :label="tab.label"
+    <custom-tab-pane v-for="(tab, index) in tabs" :key="'tab-' + index" :name="tab.name" :icon="tab.icon" :label="tab.label"
                  :closable="tab.closable">
       <!--Vue动态组件，详细说明请看官方文档-->
       <component :is="tab.name" :query="tab.query" @openTab="handleOpenTab"></component>
-    </tf-tab-pane>
-  </tf-tabs>
+    </custom-tab-pane>
+  </custom-tabs>
 </template>
 
 <script>
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style lang="scss">
-.ivu-tabs.tf-tabs-page {
+.tf-tabs-page {
   flex: auto;
   display: flex;
   flex-direction: column;

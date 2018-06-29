@@ -1,11 +1,11 @@
 <template>
-  <el-menu class="nav-menu" background-color="#495060" text-color="#bcbcbc" active-text-color="#409EFF" :default-openeds="openedIndexes"
+  <tf-menu class="nav-menu" background-color="#495060" text-color="#bcbcbc" active-text-color="#409EFF" :default-openeds="openedIndexes"
            :default-active="menu" :collapse="collapse" @select="handleMenuSelect" unique-opened>
     <template v-for="(item, i) in menuItems">
       <nav-submenu v-if="item.children && item.children.length" :key="'sub-' + i" :index="'' + (i +1)" :item="item"></nav-submenu>
       <nav-menu-item v-else :key="'sub-' + i" :index="item.code" :item="item"></nav-menu-item>
     </template>
-  </el-menu>
+  </tf-menu>
 </template>
 <script>
 import NavSubmenu from './nav-submenu'

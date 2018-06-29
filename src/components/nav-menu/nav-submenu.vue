@@ -1,5 +1,5 @@
 <template>
-  <el-submenu :index="index">
+  <tf-submenu :index="index">
     <template slot="title">
       <i class="fa" :class="'fa-' + item.icon"></i>
       <span slot="title">{{item.title}}</span>
@@ -8,7 +8,7 @@
       <nav-submenu v-if="child.children && child.children.length" :key="'child-sub-' + item.code + i" :item="child" :index="child.code"></nav-submenu>
       <nav-menu-item v-else :item="child" :key="'child-item-' + item.code + i" :index="child.code">{{child.title}}</nav-menu-item>
     </template>
-  </el-submenu>
+  </tf-submenu>
 </template>
 
 <script>
