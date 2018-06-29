@@ -90,6 +90,9 @@ export default {
         columns: [{
           prop: 'title',
           label: '标题',
+          renderHeader: () => {
+            return (<tf-input> </tf-input>)
+          },
           renderCell: (h, {row, column, $index}) => {
             return (<span class="table-link" on-click={(event) => {
               this.dialogFormVisible = true
