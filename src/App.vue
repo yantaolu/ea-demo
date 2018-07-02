@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <tf-container class="page-container">
+    <tf-container class="page-container is-vertical">
       <!--页面头部-->
       <tf-header height="50px">
         <!---->
