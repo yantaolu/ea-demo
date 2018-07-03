@@ -7,6 +7,7 @@ export default {
   children: [{
     path: '/records',
     title: '订单查询',
+    multi: true, // 支持标签页多开
     component: () => import('../views/order/records')
   }, {
     path: '/status',

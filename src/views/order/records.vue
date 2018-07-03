@@ -16,7 +16,7 @@
         </tf-form-item>
 
       </tf-form>
-      <tf-form inline labtf-width="90px" labtf-position="right" labtf-suffix="：">
+      <tf-form inline labtf-width="90px" labtf-position="right" labtf-suffix="：" style="justify-content: flex-start">
         <tf-form-item label="下单时间">
           <tf-date-picker
             v-model="condition.orderTime"
@@ -164,12 +164,12 @@ export default {
     margin-top: 10px;
     border-bottom: 1px solid #dfdfdf;
 
-    .tf-form--inline {
+    .el-form--inline {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .tf-input {
+    .el-input {
       /*width: 130px;*/
     }
   }

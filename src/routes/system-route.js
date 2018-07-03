@@ -18,6 +18,7 @@ export default {
       {
         path: '/menus',
         title: '菜单管理',
+        multi: true,
         component: () => import('../views/system/menus')
       }
     ]

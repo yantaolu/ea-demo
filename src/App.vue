@@ -19,8 +19,7 @@
         <tf-aside :width="sliderWidth + 'px'" class="page-aside">
           <div class="nav-menu-container">
             <!--导航菜单，已经实现递归可以支持无限层-->
-            <nav-menu :menuItems="menuItems" :openedIndexes="openedIndexes" :menu="menu" :collapse="collapse"
-                      @handleMenuSelect="handleMenuSelect"></nav-menu>
+            <tf-nav-menu :menus="menus" :collapse="collapse" @handleMenuSelect="handleMenuSelect"></tf-nav-menu>
           </div>
         </tf-aside>
         <!--右侧页面容器-->
@@ -34,6 +33,7 @@
           </tf-breadcrumb>
           <!--否则加载标签页模式-->
           <router-view/>
+          <!--<test :tab-components="tabComponents"></test>-->
         </tf-main>
       </tf-container>
     </tf-container>
@@ -48,55 +48,18 @@ export default {
   data () {
     return {
       mode: pageMode,
-      menuItems: menus,
-      openedIndexes: ['1'],
-      menu: 'tab-home',
-      tabsValue: 'tab-home',
+      menus,
       sliderWidth: 200,
       collapse: false
     }
   },
-  watch: {
-    /**
-     * 路由更新时，需要更新标签页
-     * @param route
-     */
-    $route (route) {
-      this.updateMenuActive(route.path.substring(1))
-    }
-  },
+  watch: {},
   methods: {
-    // 更新路由状态，由于路由处理中使用了params参数，所以只能通过name去更新路由，否则拿不到params中的tabCode
-    pushRouterState ({name = 'index', tabCode, refresh = true, query = {}}) {
-      this.$router.push({
-        name,
-        query,
-        params: {
-          tabCode,
-          refresh
-        }
-      })
-    },
     // 点击菜单时，获取到菜单的code，按照相应的规则进行转换得到路由名称
-    handleMenuSelect (index) {
+    handleMenuSelect (index, newTab = false) {
       let paths = decodeURIComponent(index).split('/').filter(path => path !== '')
       let tabCode = paths.pop() || ''
-      this.pushRouterState({name: paths.length ? paths.join('-') : 'index', tabCode: tabCode || ''})
-    },
-    // 更新菜单的active状态
-    updateMenuActive (code = 'tab-home') {
-      this.menu = code
-      if (!code || code === 'tab-home') {
-        this.$set(this, 'openedIndexes', ['1'])
-      } else {
-        menus.forEach((item, i) => {
-          item.children && item.children.forEach(c => {
-            if (c.code === code) {
-              this.$set(this, 'openedIndexes', ['' + (i + 1)])
-            }
-          })
-        })
-      }
+      // this.pushRouterState({name: paths.length ? paths.join('-') : 'index', tabCode: tabCode || '', newTab})
     },
     // 收缩导航菜单栏
     toggleSlider (collapse) {
@@ -117,7 +80,6 @@ export default {
     }
   },
   mounted () {
-    this.updateMenuActive(this.$route.path.substring(1))
   }
 }
 </script>

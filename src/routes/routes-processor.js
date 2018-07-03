@@ -4,7 +4,11 @@ export default function (rootRoutes, tabRoutes) {
   let {components, menus, tabs, menuTree} = {
     // 存储标签页将要加载的异步组件
     components: {
-      'tab-home': () => import('../views/home') // 组件名对应异步组件
+      'tab-home': {
+        component: () => import('../views/home'), // 组件名对应异步组件
+        icon: 'home',
+        title: '首页'
+      }
     },
     // 存储导航菜单
     menus: [],
@@ -75,6 +79,7 @@ export default function (rootRoutes, tabRoutes) {
         }
         menuTree.children.push(treeNode)
       } else if (route.menu !== false) {
+        route.multi && (menuItem.multi = true)
         parent.menu && parent.menu.children && parent.menu.children.push(menuItem)
         route.menu = menuItem
       }
@@ -85,7 +90,11 @@ export default function (rootRoutes, tabRoutes) {
 
       // 组件及属性
       if (route.component) {
-        components[`tab-${pathArr.join('-')}`] = route.component
+        components[`tab-${pathArr.join('-')}`] = {
+          component: route.component,
+          title: route.title,
+          icon: route.icon
+        }
         tabs[`tab-${pathArr.join('-')}`] = {
           title: route.title,
           icon: route.icon

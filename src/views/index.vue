@@ -1,29 +1,23 @@
 <template>
-  <!--标签页组件-->
-  <custom-tabs class="tf-tabs-page" :value="tabsValue" @on-tab-click="handleTabClick" @on-tab-remove="handleTabRemove" @on-tab-refresh="handleTabRefresh">
-    <!--默认标签页首页-->
-    <custom-tab-pane name="tab-home" icon="home" label="首页">
-      <tab-home @openTab="handleOpenTab"></tab-home>
-    </custom-tab-pane>
-
-    <custom-tab-pane v-for="(tab, index) in tabs" :key="'tab-' + index" :name="tab.name" :icon="tab.icon" :label="tab.label"
-                 :closable="tab.closable">
-      <!--Vue动态组件，详细说明请看官方文档-->
-      <component :is="tab.name" :query="tab.query" @openTab="handleOpenTab"></component>
-    </custom-tab-pane>
-  </custom-tabs>
+  <tabs-view>
+    <tab-home slot="home"></tab-home>
+  </tabs-view>
 </template>
 
 <script>
-import tabHome from './home'
+import TabHome from './home'
 import {mapGetters, mapActions} from 'vuex'
 // 路由中已经对标签页路由进行过处理，获取相关数据
 import {components, tabs} from '../routes/index'
+import {TabsView} from 'tf-components'
+
+TabsView.registerComponents(components)
 
 export default {
   components: Object.assign({
-    tabHome
-  }, components),
+    TabHome,
+    TabsView
+  }),
   data () {
     return {
       tabsValue: 'tab-home',
@@ -50,7 +44,7 @@ export default {
   methods: {
     // 响应路由变化，触发标签页
     handleRouteChange ({name, path, params, query}) {
-      this.updateTabActive({name, path: 'tab-' + path.substring(1).replace(/\//g, '-')}, query, params.refresh)
+      this.updateTabActive({name, path: 'tab-' + (path.substring(1).replace(/\//g, '-') || 'home')}, query, params.refresh, params.newTab)
     },
     // 更新路由状态，由于路由处理中使用了params参数，所以只能通过name去更新路由，否则拿不到params中的tabCode
     pushRouterState ({name = 'index', tabCode, refresh = true, query = {}}) {
@@ -74,7 +68,7 @@ export default {
       return tab
     },
     // 更新标签页状态，涉及新开以及切换显示
-    updateTabActive ({name = 'index', path = 'tab-home'}, query = {}, refresh = true) {
+    updateTabActive ({name = 'index', path = 'tab-home'}, query = {}, refresh = true, newTab) {
       let openedIndex = this.openedTabs.findIndex(code => code === path)
       // 当标签页为首页或者已经打开时，切换显示即可，当参数发生改变时会触发更新操作
       if (openedIndex >= 0 || path === 'tab-home') {
@@ -103,12 +97,18 @@ export default {
           }
         }
       } else {
+        let component = path
+        if (!components[component]) {
+          component = path.replace(/-[\d]+$/, '')
+        }
+        console.log(component, path)
         // 存在动态组件时，标签页加载动态组件
-        if (components[path]) {
+        if (components[component]) {
           this.tabs.push({
+            component: component,
             name: path,
-            icon: tabs[path].icon,
-            label: tabs[path].title,
+            icon: tabs[component].icon,
+            label: tabs[component].title,
             closable: true,
             query
           })
@@ -152,6 +152,9 @@ export default {
     toggleSlider (collapse) {
       this.collapse = collapse
       this.sliderWidth = collapse ? 63 : 200
+    },
+    setTitle (tab, title) {
+      console.log(tab, title)
     },
     ...mapActions(['setData'])
   }
