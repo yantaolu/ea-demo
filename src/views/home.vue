@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     openTab () {
-      this.$emit('openTab', '/order/records', {orderNumber: 9999})
+      this.$parent.openTab('/order/records', {orderNumber: 9999})
     },
     routerPush () {
       this.$router.push({

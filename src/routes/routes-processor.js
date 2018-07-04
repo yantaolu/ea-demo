@@ -1,24 +1,12 @@
 // 标签路由路由解析扩展
 export default function (rootRoutes, tabRoutes) {
   // 存储解析后的各种属性
-  let {components, menus, tabs, menuTree} = {
+  let {components, menus, menuTree} = {
     // 存储标签页将要加载的异步组件
-    components: {
-      'tab-home': {
-        component: () => import('../views/home'), // 组件名对应异步组件
-        icon: 'home',
-        title: '首页'
-      }
-    },
+    components: {},
     // 存储导航菜单
     menus: [],
-    // 存储标签页要使用到的图标以及标题等属性
-    tabs: {
-      'tab-home': {
-        icon: 'home',
-        title: '首页'
-      }
-    },
+    // 菜单树
     menuTree: {
       label: '全部菜单',
       path: '/*',
@@ -79,7 +67,7 @@ export default function (rootRoutes, tabRoutes) {
         }
         menuTree.children.push(treeNode)
       } else if (route.menu !== false) {
-        route.multi && (menuItem.multi = route.multi)
+        route.multi && (menuItem.multi = true)
         parent.menu && parent.menu.children && parent.menu.children.push(menuItem)
         route.menu = menuItem
       }
@@ -92,10 +80,6 @@ export default function (rootRoutes, tabRoutes) {
       if (route.component) {
         components[`tab-${pathArr.join('-')}`] = {
           component: route.component,
-          title: route.title,
-          icon: route.icon
-        }
-        tabs[`tab-${pathArr.join('-')}`] = {
           title: route.title,
           icon: route.icon
         }
@@ -123,5 +107,5 @@ export default function (rootRoutes, tabRoutes) {
 
   // 导航菜单按照order排序（仅一级菜单，子菜单需按照顺序自行配置）
   menus.sort((a, b) => a.order - b.order)
-  return {components, tabs, menus, menuTree}
+  return {components, menus, menuTree}
 }

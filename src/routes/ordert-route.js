@@ -7,16 +7,12 @@ export default {
   children: [{
     path: '/records',
     title: '订单查询',
+    icon: 'tickets',
     multi: true, // 支持标签页多开
     component: () => import('../views/order/records')
   }, {
     path: '/status',
     title: '状态管理',
     component: () => import('../views/order/status')
-  }, {
-    path: '/logistics',
-    // menu: false,
-    title: '车辆跟踪',
-    component: () => import('../views/order/logistics')
   }]
 }

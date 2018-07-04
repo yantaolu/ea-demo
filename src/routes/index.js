@@ -28,6 +28,6 @@ const rootRoutes = [
 ]
 
 // 处理标签页路由
-const {components, tabs, menus, menuTree} = routesProcessor(rootRoutes, tabRoutes)
-export {pageMode, components, tabs, menus, menuTree}
+const {components, menus, menuTree} = routesProcessor(rootRoutes, tabRoutes)
+export {pageMode, components, menus, menuTree}
 export default rootRoutes
