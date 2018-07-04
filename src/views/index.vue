@@ -14,10 +14,10 @@ import {TabsView} from 'tf-components'
 TabsView.registerComponents(components)
 
 export default {
-  components: Object.assign({
+  components: {
     TabHome,
     TabsView
-  }),
+  },
   data () {
     return {
       tabsValue: 'tab-home',

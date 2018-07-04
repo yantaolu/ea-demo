@@ -79,7 +79,7 @@ export default function (rootRoutes, tabRoutes) {
         }
         menuTree.children.push(treeNode)
       } else if (route.menu !== false) {
-        route.multi && (menuItem.multi = true)
+        route.multi && (menuItem.multi = route.multi)
         parent.menu && parent.menu.children && parent.menu.children.push(menuItem)
         route.menu = menuItem
       }
