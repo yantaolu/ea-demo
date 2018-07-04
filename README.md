@@ -72,9 +72,9 @@ npm run build --report
 
 ##开发建议
 
->该项目使用了element组件库，为后期扩展考虑已经对部分组件进行封装
+>该项目使用了tf-components组件库，基于ElementUI二次封装，后期会持续扩展组件或者进行组件改造替换，未做其他特殊说明的情况下，组件的使用请参照ElementUI官方文档
 
- * 建议使用 tf-button 代替 el-button，支持 el-button 所有属性
+ * tf-button 使用指南（属性扩展）
 
  tf-button Attributes
  ----
@@ -83,7 +83,7 @@ npm run build --report
 :---|:---|:---:|:---:|:---:|
 authority-code|标签页内按钮权限控制编码|String|-|-
 
-* 建议使用 tf-table 代替 el-table，使用 :columns 属性代替 el-table-column，支持 el-table 所有属性
+* tf-table 使用指南（组件封装），删除 tf-table-column 组件，请使用 columns 属性代替
 
 tf-table Attributes
 ----
@@ -120,7 +120,7 @@ name|说明
 :---|:---
 -|插入到table-header之上，可用作tool-bar，例如列表的增删改查按钮操作，参数为{selection, currentRow, oldCurrentRow}
 
-TableColumn（:columns的元素，支持el-table-column的所有Attributes转驼峰属性）
+TableColumn（:columns属性的元素，支持el-table-column的所有Attributes转驼峰属性）
 ----
 
 属性|说明|类型|可选值|默认值
