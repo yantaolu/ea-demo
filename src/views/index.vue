@@ -36,6 +36,12 @@ import TabHome from './home'
 import {TabsView} from 'tf-components'
 import {components, menus} from '../routes'
 
+components['tab-home'] = {
+  component: TabHome,
+  title: '首页',
+  icon: 'fa-home'
+}
+
 TabsView.registerComponents(components)
 export default {
   components: Object.assign({
