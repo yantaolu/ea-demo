@@ -1,4 +1,4 @@
-import routesProcessor from './routes-processor'
+import {routesProcessor} from 'tf-components'
 
 const pageMode = 'tabs'
 
@@ -28,6 +28,6 @@ const rootRoutes = [
 ]
 
 // 处理标签页路由
-const {components, menus, menuTree} = routesProcessor(rootRoutes, tabRoutes)
+const {components, menus, menuTree} = routesProcessor(rootRoutes, tabRoutes, () => import('../views/index'))
 export {pageMode, components, menus, menuTree}
 export default rootRoutes

@@ -55,7 +55,6 @@ npm run build --report
   + routes 路由配置目录
     - index.js 路由主入口
     - ***-route.js 路由模块文件
-    - routes-processor.js 单页面路由解析方法
   + multi-page （多页面扩展目录，根据实际情况扩展）
     - page1 多页目录，最终打包以目录名生成对应的page1.html
     ...
