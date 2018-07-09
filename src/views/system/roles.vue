@@ -3,31 +3,20 @@
     <div class="role-list">
       <tf-table :columns="columns" :data="roles" :pagination="false" flex border>
         <div class="tool-bar" slot-scope="selection">
-          <tf-button type="primary" @click="createRole(selection)">新增角色</tf-button>
-          <tf-button type="primary" @click="editRole(selection)">编辑角色</tf-button>
-          <tf-button type="primary" @click="deleteRole(selection)">删除角色</tf-button>
+          <tf-button type="primary" authority-code="add-role" @click="createRole(selection)">新增角色</tf-button>
+          <tf-button type="primary" authority-code="edit-role" @click="editRole(selection)">编辑角色</tf-button>
+          <tf-button type="primary" authority-code="delete-role" @click="deleteRole(selection)">删除角色</tf-button>
         </div>
-        createRole
       </tf-table>
     </div>
-    <div class="menu-tree">
-      <h4>角色菜单</h4>
-      <tf-tree
-        :data="data2"
-        show-checkbox
-        node-key="path"
-        default-expand-all
-        :props="defaultProps">
-      </tf-tree>
-
-    </div>
+    <tf-routes-tree class="menu-tree" :menu-tree="menuTree" :default-checked-keys="['/guide/md-preview']">
+      <h4>权限菜单</h4>
+    </tf-routes-tree>
   </div>
 </template>
 
 <script>
 import {menuTree} from '../../routes/index'
-
-console.log(menuTree)
 
 export default {
   name: 'role-management',
@@ -53,7 +42,7 @@ export default {
         roleId: 'guest',
         roleName: '访客'
       }],
-      data2: [menuTree],
+      menuTree: menuTree,
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -69,6 +58,8 @@ export default {
     },
     deleteRole ({selection, currentRow, oldCurrentRow}) {
       console.log(selection, currentRow, oldCurrentRow)
+    },
+    onTabShow () {
     }
   }
 }
