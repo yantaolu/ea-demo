@@ -47,7 +47,7 @@ npm run build --report
 + src 源码目录
   + assets 静态资源目录
     - css 样式目录
-    - custom-theme elementUI主题定制目录，定制方法参看elementUI官网 http://element-cn.eleme.io/#/zh-CN/component/custom-theme 采用官方推荐的【变量覆盖】方式
+    - custom-theme tf-components主题定制目录，定制方法参看elementUI官网 http://element-cn.eleme.io/#/zh-CN/component/custom-theme 采用官方推荐的【变量覆盖】方式
     - images 图片目录
     - favicon.ico 网站标识
   + components 组件目录
@@ -71,67 +71,17 @@ npm run build --report
 
 ##开发建议
 
->该项目使用了tf-components组件库，基于ElementUI二次封装，后期会持续扩展组件或者进行组件改造替换，未做其他特殊说明的情况下，组件的使用请参照ElementUI官方文档
-
- * tf-button 使用指南（属性扩展）
-
- tf-button Attributes
- ----
-
-参数 | 说明 | 类型 | 可选值 | 默认值
-:---|:---|:---:|:---:|:---:|
-authority-code|标签页内按钮权限控制编码|String|-|-
-
-* tf-table 使用指南（组件封装），删除 tf-table-column 组件，请使用 columns 属性代替
-
-tf-table Attributes
-----
-
-参数 | 说明 | 类型 | 可选值 | 默认值
-:---|:---|:---:|:---:|:---:|
-data|显示的数据或者获取数据的方法|Array/Function({page = 1, size = 20, setData, setTotal})|-
-columns|数据表列数据|Array|[{TableColumn}]|[]
-autoLoad|当data设置为Function时，是否自动加载数据|Boolean|true/false|true
-flex|是否使用flex布局，需要表格自适应的场景，父元素也需要使用flex布局|Boolean|true/false|false
-pagination|是否分页|Boolean|true/false|true
-pageSizes|单页可显示行数|Array|-|[10, 20, 50, 100, 200]
-pageSize|默认显示行数|Number|pageSizes中任意元素|20
-showLoading|是否显示加载动画|Boolean|true/false|true
-loading|加载中，在data是Function时，可在父组件内设置加载|Boolean|true/false|false
-
-tf-table Methods
-----
-
-方法名|说明|参数或类型
-:---|:---|:---
-setData|设置列表显示的数据|Array
-setTotal|设置分页列表数据总数|Number
-refresh|加载/刷新当前页列表数据|-
-reload|重新加载数据，从第一页开始|-
-goTo|加载第n页数据|Number
-showColumn|显示列|String: columnProp
-hideColumn|隐藏列|String: columnProp
-
-tf-table Slot
-----
-
-name|说明
-:---|:---
--|插入到table-header之上，可用作tool-bar，例如列表的增删改查按钮操作，参数为{selection, currentRow, oldCurrentRow}
-
-TableColumn（:columns属性的元素，支持el-table-column的所有Attributes转驼峰属性）
-----
-
-属性|说明|类型|可选值|默认值
-:---|:---|:---:|:---:|:---:|
-hidden|列默认是否隐藏|Boolean|true/false|false
-renderCell|自定义表格内容|Function(h, {row, column, $index})|-|-
+> 该项目使用了tf-components组件库，基于ElementUI二次封装，后期会持续扩展组件或者进行组件改造替换，未做其他特殊说明的情况下，组件的使用请参照ElementUI官方文档
 
 ##相关技术文档
 
 > Vue（基础知识）
 
 https://cn.vuejs.org/v2/guide/
+
+> tf-components（封装组件库）
+
+http://121.40.84.146/tf.html
 
 > Element（组件库）
 
