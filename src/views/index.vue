@@ -23,9 +23,7 @@
       </tf-aside>
       <!--右侧页面容器-->
       <tf-main class="page-content">
-        <tabs-view home-icon="" home-title="home">
-          <tab-home slot="home"></tab-home>
-        </tabs-view>
+        <tabs-view :components="components"></tabs-view>
       </tf-main>
     </tf-container>
   </tf-container>
@@ -42,17 +40,16 @@ components['tab-home'] = {
   icon: 'fa-home'
 }
 
-TabsView.registerComponents(components)
 export default {
-  components: Object.assign({
-    TabsView,
-    TabHome
-  }),
+  components: {
+    TabsView
+  },
   data () {
     return {
       menus: menus,
       sliderWidth: 200,
-      collapse: false
+      collapse: false,
+      components
     }
   },
   methods: {

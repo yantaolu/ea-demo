@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import {menuTree} from './routes'
+
 export default {
   name: 'App',
   data () {
@@ -16,8 +18,31 @@ export default {
     }
   },
   watch: {},
-  methods: {},
-  mounted () {
+  methods: {
+    async getUserAuthorities () {
+      return new Promise((resolve, reject) => {
+        let superRoutes = []
+        const parseMenu = (menu) => {
+          if (!menu.children) {
+            let route = {
+              path: menu.path
+            }
+            menu.buttons && (route.buttons = Object.keys(menu.buttons))
+            superRoutes.push(route)
+          } else {
+            menu.children.forEach(child => {
+              parseMenu(child)
+            })
+          }
+        }
+        parseMenu(menuTree)
+        resolve(superRoutes)
+      })
+    }
+  },
+  async mounted () {
+    const data = await this.getUserAuthorities()
+    this.$store.dispatch('setRootRoutes', data)
   }
 }
 </script>

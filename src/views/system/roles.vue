@@ -9,7 +9,7 @@
         </div>
       </tf-table>
     </div>
-    <tf-routes-tree class="menu-tree" :menu-tree="menuTree" :default-checked-keys="['/guide/md-preview']">
+    <tf-routes-tree ref="menu-tree" class="menu-tree" :menu-tree="menuTree" :default-checked-keys="defaultCheckedKeys">
       <h4>权限菜单</h4>
     </tf-routes-tree>
   </div>
@@ -17,6 +17,19 @@
 
 <script>
 import {menuTree} from '../../routes/index'
+
+let menus = {}
+
+const parseMenu = (menu) => {
+  if (!menu.children) {
+    menus[menu.path] = menu
+  } else {
+    menu.children.forEach(child => {
+      parseMenu(child)
+    })
+  }
+}
+parseMenu(menuTree)
 
 export default {
   name: 'role-management',
@@ -38,16 +51,39 @@ export default {
       roles: [{
         roleId: 'admin',
         roleName: '系统管理员'
-      }, {
-        roleId: 'guest',
-        roleName: '访客'
       }],
       menuTree: menuTree,
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      }
+      defaultCheckedKeys: []
     }
+  },
+  computed: {
+    rootRoutes () {
+      return this.$store.getters.rootRoutes
+    }
+  },
+  watch: {
+    rootRoutes (arr) {
+      arr.forEach(item => {
+        if (item.buttons) {
+          item.buttons.forEach(button => {
+            menus[item.path].buttons[button].checked = true
+          })
+        }
+        this.defaultCheckedKeys.push(item.path)
+      })
+    }
+  },
+  mounted () {
+    this.$on('tabShow', function () {
+    })
+    this.rootRoutes.forEach(item => {
+      if (item.buttons) {
+        item.buttons.forEach(button => {
+          menus[item.path].buttons[button].checked = true
+        })
+      }
+      this.defaultCheckedKeys.push(item.path)
+    })
   },
   methods: {
     createRole () {
@@ -60,6 +96,9 @@ export default {
       console.log(selection, currentRow, oldCurrentRow)
     },
     onTabShow () {
+    },
+    openTab () {
+      this.$parent.openTab('/logs', {}, false)
     }
   }
 }
