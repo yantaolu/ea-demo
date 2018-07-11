@@ -10,6 +10,7 @@ import Components from './components/custom-components'
 // import locale from 'tf-components/lib/locale/lang/en'
 // font-awesome 字体图标库
 import 'tf-components/lib/css/font-awesome.min.css'
+// import 'tf-components/lib/css/tf-components.css'
 
 Vue.use(Router)
 Vue.use(TfComponents, {size: 'small'})
