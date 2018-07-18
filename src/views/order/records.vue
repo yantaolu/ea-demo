@@ -91,7 +91,7 @@ export default {
         columns: [{
           prop: 'title',
           label: '标题',
-          renderHeader: () => {
+          renderHeader () {
             return (<tf-input> </tf-input>)
           },
           renderCell: (h, {row, column, $index}) => {
