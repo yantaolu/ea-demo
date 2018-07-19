@@ -1,7 +1,7 @@
 <template>
   <section class="order-records">
     <section class="query-area">
-      <tf-form inline labtf-width="90px" labtf-position="right" labtf-suffix="：" :model="condition">
+      <tf-form inline label-width="90px" label-position="right" label-suffix="：" :model="condition">
         <tf-form-item label="订单号">
           <tf-input name="orderNumber" placeholder="订单号" :value="query.orderNumber"></tf-input>
         </tf-form-item>
@@ -16,7 +16,7 @@
         </tf-form-item>
 
       </tf-form>
-      <tf-form inline labtf-width="90px" labtf-position="right" labtf-suffix="：" style="justify-content: flex-start">
+      <tf-form inline label-width="90px" label-position="right" label-suffix="：" style="justify-content: flex-start">
         <tf-form-item label="下单时间">
           <tf-date-picker
             v-model="condition.orderTime"

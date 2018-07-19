@@ -35,15 +35,10 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     }
   },
-  externals: {
-    'BMap': 'BMap',
-    'bmap': 'BMap',
-    'BMapLib': 'BMapLib',
-    'bmapLib': 'BMapLib'
-  },
+  externals: {},
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),

@@ -1,9 +1,8 @@
 export default {
-  path: '/order',
-  title: '订单管理', // 一级菜单标题、标签页标题
-  menu: true, // 是否在导航菜单中存在入口，默认为true
-  order: 0, // 一级菜单序号，越小越靠前
-  icon: 'fa-list-alt', // 一级菜单图标
+  path: '/examples',
+  title: 'Examples',
+  order: 999,
+  icon: 'fa-dribbble',
   children: [{
     path: '/records',
     title: '订单查询',
@@ -14,5 +13,14 @@ export default {
     path: '/status',
     title: '状态管理',
     component: () => import('../views/order/status')
+  }, {
+    path: '/roles',
+    title: '角色管理',
+    component: () => import('../views/system/roles'),
+    buttons: {
+      'add-role': '新增角色',
+      'edit-role': '编辑角色',
+      'delete-role': '删除角色'
+    }
   }]
 }

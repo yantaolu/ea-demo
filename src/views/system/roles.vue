@@ -1,14 +1,7 @@
 <template>
   <div class="role-management">
-    <div class="role-list">
-      <tf-table :columns="columns" :data="roles" :pagination="false" flex border>
-        <div class="tool-bar" slot-scope="selection">
-          <tf-button type="primary" authority-code="add-role" @click="createRole(selection)">新增角色</tf-button>
-          <tf-button type="primary" authority-code="edit-role" @click="editRole(selection)">编辑角色</tf-button>
-          <tf-button type="primary" authority-code="delete-role" @click="deleteRole(selection)">删除角色</tf-button>
-        </div>
-      </tf-table>
-    </div>
+    <tf-integrated-page ref="page" class="role-list" :columns="columns" :buttons="buttons" :conditions="conditions" :fields="fields" :condition-size="3"
+                        @fetch-data="fetchData"></tf-integrated-page>
     <tf-routes-tree ref="menu-tree" class="menu-tree" :menu-tree="menuTree" :default-checked-keys="defaultCheckedKeys">
       <h4>权限菜单</h4>
     </tf-routes-tree>
@@ -40,10 +33,10 @@ export default {
         label: '序号'
       }, {
         prop: 'roleId',
-        label: '编号'
+        label: '角色编号'
       }, {
         prop: 'roleName',
-        label: '名称'
+        label: '角色名称'
       }, {
         prop: 'memo',
         label: '备注'
@@ -51,7 +44,63 @@ export default {
       roles: [{
         roleId: 'admin',
         roleName: '系统管理员'
+      }, {
+        roleId: 'visitor',
+        roleName: '访客'
       }],
+      conditions: [{
+        name: 'roleId',
+        text: '管理员编号'
+      }, {
+        name: 'roleName',
+        text: '管理员名称'
+      }],
+      buttons: {
+        add: {
+          text: '新增角色',
+          submit: (role) => {
+            return new Promise((resolve, reject) => {
+              this.roles.push(role)
+              this.$refs.page.refresh()
+              resolve()
+            })
+          }
+        },
+        edit: {
+          text: '编辑角色',
+          submit: (role) => {
+            return new Promise((resolve, reject) => {
+              let index = this.roles.findIndex(r => r.roleId === role.roleId)
+              if (index >= 0) {
+                this.roles.splice(index, 1, role)
+                this.$refs.page.refresh()
+                resolve()
+              } else {
+                reject(new Error('该角色不存在，不能更新'))
+              }
+            })
+          }
+        },
+        delete: {
+          text: '删除角色',
+          submit: (ids) => {
+            ids.forEach(id => {
+              let index = this.roles.findIndex(role => role.roleId === id)
+              index >= 0 && this.roles.splice(index, 1)
+              this.$refs.page.refresh()
+            })
+          },
+          key: 'roleId'
+        },
+        view: {
+          text: '查看详情'
+        }
+      },
+      fields: [
+        {type: 'input', text: '角色编号', name: 'roleId', rules: [{required: true, message: '请输入角色编号', trigger: 'blur'}], edit: false},
+        {type: 'input', text: '角色名称', name: 'roleName', required: true},
+        {type: 'textarea', text: '备注', name: 'memo'}
+      ],
       menuTree: menuTree,
       defaultCheckedKeys: []
     }
@@ -99,6 +148,17 @@ export default {
     },
     openTab () {
       this.$parent.openTab('/logs', {}, false)
+    },
+    fetchData ({setData, setTotal, params}) {
+      let data = [...this.roles]
+      if (params.roleId) {
+        data = data.filter(role => role.roleId === params.roleId)
+      }
+      if (params.roleName) {
+        data = data.filter(role => role.roleName === params.roleName)
+      }
+      setData(data)
+      setTotal(data.length)
     }
   }
 }
