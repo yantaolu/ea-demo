@@ -136,20 +136,6 @@ export default {
     })
   },
   methods: {
-    createRole () {
-
-    },
-    editRole ({selection, currentRow, oldCurrentRow}) {
-      console.log(selection, currentRow, oldCurrentRow)
-    },
-    deleteRole ({selection, currentRow, oldCurrentRow}) {
-      console.log(selection, currentRow, oldCurrentRow)
-    },
-    onTabShow () {
-    },
-    openTab () {
-      this.$parent.openTab('/logs', {}, false)
-    },
     fetchData ({setData, setTotal, params}) {
       let data = [...this.roles]
       if (params.roleId) {
