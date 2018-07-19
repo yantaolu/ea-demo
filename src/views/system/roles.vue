@@ -10,6 +10,7 @@
 
 <script>
 import {menuTree} from '../../routes/index'
+import {ValidateRules} from 'tf-components'
 
 let menus = {}
 
@@ -97,7 +98,7 @@ export default {
         }
       },
       fields: [
-        {type: 'input', text: '角色编号', name: 'roleId', rules: [{required: true, message: '请输入角色编号', trigger: 'blur'}], edit: false},
+        {type: 'input', text: '角色编号', name: 'roleId', rules: [ValidateRules.required('请输入角色编号'), ValidateRules.length(4, 8)], edit: false},
         {type: 'input', text: '角色名称', name: 'roleName', required: true},
         {type: 'textarea', text: '备注', name: 'memo'}
       ],
