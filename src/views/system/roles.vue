@@ -139,10 +139,10 @@ export default {
     fetchData ({setData, setTotal, params}) {
       let data = [...this.roles]
       if (params.roleId) {
-        data = data.filter(role => role.roleId === params.roleId)
+        data = data.filter(role => new RegExp(params.roleId).test(role.roleId))
       }
       if (params.roleName) {
-        data = data.filter(role => role.roleName === params.roleName)
+        data = data.filter(role => new RegExp(params.roleName).test(role.roleName))
       }
       setData(data)
       setTotal(data.length)

@@ -1,38 +1,7 @@
 <template>
   <section class="order-records">
     <section class="query-area">
-      <tf-form inline label-width="90px" label-position="right" label-suffix="：" :model="condition">
-        <tf-form-item label="订单号">
-          <tf-input name="orderNumber" placeholder="订单号" :value="query.orderNumber"></tf-input>
-        </tf-form-item>
-        <tf-form-item label="客户ID">
-          <tf-input v-model="condition.customerId" placeholder="客户ID"></tf-input>
-        </tf-form-item>
-        <tf-form-item label="客户名称">
-          <tf-input v-model="condition.customerName" placeholder="客户名称"></tf-input>
-        </tf-form-item>
-        <tf-form-item label="客户单号">
-          <tf-input v-model="condition.customerOrder" placeholder="客户单号"></tf-input>
-        </tf-form-item>
-
-      </tf-form>
-      <tf-form inline label-width="90px" label-position="right" label-suffix="：" style="justify-content: flex-start">
-        <tf-form-item label="下单时间">
-          <tf-date-picker
-            v-model="condition.orderTime"
-            type="datetimerange"
-            :picker-options="pickerOptions"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            :default-time="['00:00:00', '23:59:59']"
-            align="right">
-          </tf-date-picker>
-        </tf-form-item>
-        <tf-form-item>
-          <tf-button size="medium" type="primary" style="margin: 0 15px;" @click="queryData">查询</tf-button>
-        </tf-form-item>
-      </tf-form>
+      <tf-query-conditions :conditions="conditions" @query="queryData"></tf-query-conditions>
     </section>
 
     <section class="list-area">
@@ -70,13 +39,14 @@ export default {
   },
   data () {
     return {
-      condition: {
-        orderNumber: '',
-        customerId: '',
-        customerName: '',
-        customerOrder: '',
-        orderTime: DateUtil.getOneWeek()
-      },
+      conditions: [
+        {text: '订单号', name: 'orderNumber'},
+        {text: '客户ID', name: 'customerId'},
+        {text: '客户名称', name: 'customerName'},
+        {text: '客户单号', name: 'customerOrder'},
+        {type: 'date', dateType: 'datetime', text: '下单时间', name: 'orderTime', range: true}
+      ],
+      condition: {},
       pickerOptions: DateUtil.getPickerOptions(),
       columns: [{
         type: 'index',
@@ -140,7 +110,9 @@ export default {
         setTotal(100)
       })
     },
-    queryData () {
+    queryData (params) {
+      this.condition = {...params}
+      console.log(this.condition)
       this.$refs['order-list'].reload()
     }
   },
