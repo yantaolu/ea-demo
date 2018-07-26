@@ -51,10 +51,10 @@ export default {
       }],
       conditions: [{
         name: 'roleId',
-        text: '管理员编号'
+        text: '角色编号'
       }, {
         name: 'roleName',
-        text: '管理员名称'
+        text: '角色名称'
       }],
       buttons: {
         add: {
