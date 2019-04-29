@@ -6,15 +6,15 @@ import App from './App'
 import rootRoutes from './routes/index'
 import Router from 'vue-router'
 import store from './store/index'
-import TfComponents from 'tf-components'
+import ElementAdmin from 'element-admin'
 import Components from './components/custom-components'
-// import locale from 'tf-components/lib/locale/lang/en'
+// import locale from 'element-admin/lib/locale/lang/en'
 // font-awesome 字体图标库
-import 'tf-components/lib/css/font-awesome.min.css'
-// import 'tf-components/lib/css/tf-components.css'
+import 'element-admin/lib/css/font-awesome.min.css'
+// import 'element-admin/lib/css/element-admin.css'
 
 Vue.use(Router)
-Vue.use(TfComponents, {size: 'small'})
+Vue.use(ElementAdmin, {size: 'small'})
 Vue.use(Components)
 
 const router = new Router({

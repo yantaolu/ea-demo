@@ -1,16 +1,16 @@
 <template>
   <div class="role-management">
-    <tf-integrated-page ref="page" class="role-list" :columns="columns" :buttons="buttons" :conditions="conditions" :fields="fields" :condition-size="3"
-                        @fetch-data="fetchData"></tf-integrated-page>
-    <tf-routes-tree ref="menu-tree" class="menu-tree" :menu-tree="menuTree" :default-checked-keys="defaultCheckedKeys">
+    <ea-integrated-page ref="page" class="role-list" :columns="columns" :buttons="buttons" :conditions="conditions" :fields="fields" :condition-size="3"
+                        @fetch-data="fetchData"></ea-integrated-page>
+    <ea-routes-tree ref="menu-tree" class="menu-tree" :menu-tree="menuTree" :default-checked-keys="defaultCheckedKeys">
       <h4>权限菜单</h4>
-    </tf-routes-tree>
+    </ea-routes-tree>
   </div>
 </template>
 
 <script>
 import {menuTree} from '../../routes/index'
-import {ValidateRules} from 'tf-components'
+import {ValidateRules} from 'element-admin'
 
 let menus = {}
 

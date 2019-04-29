@@ -1,4 +1,4 @@
-import {routesProcessor} from 'tf-components'
+import {routesProcessor} from 'element-admin'
 
 const pageMode = 'tabs'
 

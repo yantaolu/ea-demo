@@ -1,7 +1,7 @@
 {
-  "name": "tf-vue",
+  "name": "ea-demo",
   "version": "1.0.0",
-  "description": "The tf56 vue demo",
+  "description": "The element-admin demo",
   "author": "YantaoLu",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.10",
-    "tf-components": "^0.4.9",
+    "element-admin": "^0.0.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

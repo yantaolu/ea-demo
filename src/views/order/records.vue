@@ -1,31 +1,26 @@
 <template>
   <section class="order-records">
-    <section class="query-area">
-      <tf-query-conditions :conditions="conditions" @query="queryData"></tf-query-conditions>
-    </section>
+    <ea-query-conditions :conditions="conditions" @query="queryData"></ea-query-conditions>
 
-    <section class="list-area">
-      <tf-table ref="order-list" :columns="columns" :data="fetchData" :loading="loading" flex border>
-      </tf-table>
-    </section>
+    <ea-table ref="order-list" :columns="columns" :data="fetchData" :loading="loading" flex border></ea-table>
 
-    <tf-dialog title="订单明细" :visible.sync="dialogFormVisible">
-      <tf-form>
-        <tf-form-item label="活动名称">
-          <tf-input auto-complete="off"></tf-input>
-        </tf-form-item>
-        <tf-form-item label="活动区域">
-          <tf-select placeholder="请选择活动区域" value="">
-            <tf-option label="区域一" value="shanghai"></tf-option>
-            <tf-option label="区域二" value="beijing"></tf-option>
-          </tf-select>
-        </tf-form-item>
-      </tf-form>
+    <ea-dialog title="订单明细" :visible.sync="dialogFormVisible">
+      <ea-form>
+        <ea-form-item label="活动名称">
+          <ea-input auto-complete="off"></ea-input>
+        </ea-form-item>
+        <ea-form-item label="活动区域">
+          <ea-select placeholder="请选择活动区域" value="">
+            <ea-option label="区域一" value="shanghai"></ea-option>
+            <ea-option label="区域二" value="beijing"></ea-option>
+          </ea-select>
+        </ea-form-item>
+      </ea-form>
       <div slot="footer" class="dialog-footer">
-        <tf-button size="small" @click="dialogFormVisible = false">取 消</tf-button>
-        <tf-button size="small" type="primary" @click="dialogFormVisible = false">确 定</tf-button>
+        <ea-button size="small" @click="dialogFormVisible = false">取 消</ea-button>
+        <ea-button size="small" type="primary" @click="dialogFormVisible = false">确 定</ea-button>
       </div>
-    </tf-dialog>
+    </ea-dialog>
   </section>
 </template>
 
@@ -40,7 +35,7 @@ export default {
   data () {
     return {
       conditions: [
-        {text: '订单号', name: 'orderNumber'},
+        {text: '订单号', name: 'orderNumber', default: this.query.orderNumber},
         {text: '客户ID', name: 'customerId'},
         {text: '客户名称', name: 'customerName'},
         {text: '客户单号', name: 'customerOrder'},
@@ -53,7 +48,7 @@ export default {
         label: 'No.',
         // hidden: true,
         renderCell (h, {row, column, $index}) {
-          return `<span>${$index + 1}</span>`
+          return (<span>{$index + 1}</span>)
         }
       }, {
         label: '合并',
@@ -62,7 +57,7 @@ export default {
           prop: 'title',
           label: '标题',
           renderHeader () {
-            return (<tf-input> </tf-input>)
+            return (<ea-input></ea-input>)
           },
           renderCell: (h, {row, column, $index}) => {
             return (<span class="table-link" on-click={(event) => {
@@ -132,32 +127,5 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  .query-area {
-    margin-top: 10px;
-    border-bottom: 1px solid #dfdfdf;
-
-    .el-form--inline {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .el-input {
-      /*width: 130px;*/
-    }
-  }
-
-  .list-area {
-    padding-top: 15px;
-    flex: auto;
-    display: flex;
-    flex-direction: column;
-    .tf-table {
-      height: 100%;
-    }
-    .table-link {
-      color: #3a8ee6;
-      cursor: pointer;
-    }
-  }
 }
 </style>

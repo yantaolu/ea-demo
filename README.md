@@ -1,6 +1,6 @@
-# tf-vue
+# ea-demo
 
-> The tf56 vue demo
+> The element-admin vue demo
 
 ## Build Setup
 
@@ -47,7 +47,7 @@ npm run build --report
 + src 源码目录
   + assets 静态资源目录
     - css 样式目录
-    - custom-theme tf-components主题定制目录，定制方法参看elementUI官网 http://element-cn.eleme.io/#/zh-CN/component/custom-theme 采用官方推荐的【变量覆盖】方式
+    - custom-theme element-admin主题定制目录，定制方法参看elementUI官网 http://element-cn.eleme.io/#/zh-CN/component/custom-theme 采用官方推荐的【变量覆盖】方式
     - images 图片目录
     - favicon.ico 网站标识
   + components 组件目录
@@ -71,7 +71,7 @@ npm run build --report
 
 ##开发建议
 
-> 该项目使用了tf-components组件库，基于ElementUI二次封装，后期会持续扩展组件或者进行组件改造替换，未做其他特殊说明的情况下，组件的使用请参照ElementUI官方文档
+> 该项目使用了element-admin组件库，基于ElementUI二次封装，后期会持续扩展组件或者进行组件改造替换，未做其他特殊说明的情况下，组件的使用请参照ElementUI官方文档
 
 ##相关技术文档
 
@@ -79,9 +79,9 @@ npm run build --report
 
 https://cn.vuejs.org/v2/guide/
 
-> tf-components（封装组件库）
+> element-admin（封装组件库）
 
-http://121.40.84.146/tf.html
+http://el-admin.webjs.fun
 
 > Element（组件库）
 

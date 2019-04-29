@@ -1,37 +1,37 @@
 <template>
-  <tf-container class="page-container is-vertical">
+  <ea-container class="page-container is-vertical">
     <!--页面头部-->
-    <tf-header height="50px">
+    <ea-header height="50px">
       <!---->
       <custom-header @logout="handleLogout" @toggleSlider="toggleSlider">
         <!--logo定制-->
         <slot slot="logo">
           <span class="slot-logo" :style="{width: sliderWidth + 'px'}">
-            <template v-if="!collapse">TF-Vue</template>
+            <template v-if="!collapse">EA-demo</template>
           </span>
         </slot>
       </custom-header>
-    </tf-header>
+    </ea-header>
     <!--下部主体部分-->
-    <tf-container>
+    <ea-container>
       <!--侧边栏，可缩放-->
-      <tf-aside :width="sliderWidth + 'px'" class="page-aside">
+      <ea-aside :width="sliderWidth + 'px'" class="page-aside">
         <div class="nav-menu-container">
           <!--导航菜单，已经实现递归可以支持无限层-->
-          <tf-nav-menu :menus="menus" :collapse="collapse" @handleMenuSelect="handleMenuSelect"></tf-nav-menu>
+          <ea-nav-menu :menus="menus" :collapse="collapse" @handleMenuSelect="handleMenuSelect"></ea-nav-menu>
         </div>
-      </tf-aside>
+      </ea-aside>
       <!--右侧页面容器-->
-      <tf-main class="page-content">
+      <ea-main class="page-content">
         <tabs-view :components="components"></tabs-view>
-      </tf-main>
-    </tf-container>
-  </tf-container>
+      </ea-main>
+    </ea-container>
+  </ea-container>
 </template>
 
 <script>
 import TabHome from './home'
-import {TabsView} from 'tf-components'
+import {TabsView} from 'element-admin'
 import {components, menus} from '../routes'
 
 components['tab-home'] = {

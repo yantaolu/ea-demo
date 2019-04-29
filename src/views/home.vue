@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%; display: flex; flex-direction: column;">
-    <router-link to="/order/records?orderNumber=50000000">router-link 打开订单查询页面</router-link>
+    <router-link to="/examples/records?orderNumber=50000000">router-link 打开订单查询页面</router-link>
     <div>
       <a href="#" @click.prevent="openTab">触发openTab打开标签页1</a>
     </div>
@@ -8,19 +8,19 @@
       <a href="#" @click.prevent="routerPush">路由push打开标签页1</a>
     </div>
     <div>全局data：{{random}}</div>
-    <tf-button @click="randomData" type="primary">改变data</tf-button>
-    <tf-row>
-      <tf-button authorityCode>默认按钮</tf-button>
-      <tf-button size="medium">中等button</tf-button>
-      <tf-button size="small">小型按钮</tf-button>
-      <tf-button size="mini">超小按钮</tf-button>
-    </tf-row>
-    <tf-button-group>
-      <tf-button>111</tf-button>
-      <tf-button>222</tf-button>
-      <tf-button>333</tf-button>
-    </tf-button-group>
-    <tf-table ref="tfTable" :height="'300px'" :max-height="400" :columns="columns" :pagination="false" :data="fetchData" border></tf-table>
+    <ea-button @click="randomData" type="primary">改变data</ea-button>
+    <ea-row>
+      <ea-button authorityCode>默认按钮</ea-button>
+      <ea-button size="medium">中等button</ea-button>
+      <ea-button size="small">小型按钮</ea-button>
+      <ea-button size="mini">超小按钮</ea-button>
+    </ea-row>
+    <ea-button-group>
+      <ea-button>111</ea-button>
+      <ea-button>222</ea-button>
+      <ea-button>333</ea-button>
+    </ea-button-group>
+    <ea-table ref="eaTable" :height="'300px'" :max-height="400" :columns="columns" :pagination="false" :data="fetchData" border></ea-table>
   </div>
 </template>
 
@@ -69,11 +69,11 @@ export default {
   },
   methods: {
     openTab () {
-      this.$parent.openTab('/order/records', {orderNumber: 9999})
+      this.$parent.openTab('/examples/records', {orderNumber: 9999})
     },
     routerPush () {
       this.$router.push({
-        path: '/order/records',
+        path: '/examples/records',
         query: {
           orderNumber: 1000
         }
@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted () {
-    this.$refs.tfTable.clearSelection()
+    this.$refs.eaTable.clearSelection()
   }
 }
 </script>

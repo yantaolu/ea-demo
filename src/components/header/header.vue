@@ -1,5 +1,5 @@
 <template>
-  <div class="tf-header">
+  <div class="ea-header">
     <div class="page-logo">
       <slot name="logo"></slot>
     </div>
@@ -9,26 +9,26 @@
       </span>
       <div class="user-info">
         <div class="info-item messages">
-          <tf-badge :value="200" :max="99" class="item">
+          <ea-badge :value="200" :max="99" class="item">
             <i class="fa fa-envelope-o"></i>
-          </tf-badge>
+          </ea-badge>
         </div>
         <div class="info-item notifications">
-          <tf-badge :value="10" :max="99" class="item">
+          <ea-badge :value="10" :max="99" class="item">
             <i class="fa fa-bell-o"></i>
-          </tf-badge>
+          </ea-badge>
         </div>
         <div class="info-item tasks">
-          <!--<tf-badge :value="0" :max="99" class="item">-->
+          <!--<ea-badge :value="0" :max="99" class="item">-->
           <i class="fa fa-flag-o"></i>
-          <!--</tf-badge>-->
+          <!--</ea-badge>-->
         </div>
         <div class="info-item login-user" @mouseenter="showItems = true" @mouseleave="showItems = false">
           <span class="head-portrait">
             <img src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"/>
           </span>
           <span class="user-name">鲁延涛</span>
-          <transition name="tf-zoom-in-top">
+          <transition name="ea-zoom-in-top">
             <div class="drop-down-items" v-show="showItems">
               <ul>
                 <li><i class="fa fa-user" aria-hidden="true"></i>个人中心</li>
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss">
-.tf-header {
+.ea-header {
   display: flex;
   justify-content: space-between;
   background: #3c8dbc;
